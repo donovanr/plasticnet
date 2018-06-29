@@ -17,10 +17,24 @@ due.cite(
 )
 
 
-# soft thresholding operator
 # TODO test whether math is faster than numpy
 @jit(nopython=True, nogil=True, cache=True)
 def soft_thresh(lam, x):
+    """
+    Soft thresholding operator
+
+    Parameters
+    ----------
+    lam : float
+        the soft thresholding penalty. must be non-negative.
+    x : float array
+        the array to be soft thresholded element-wise.
+
+    Returns
+    -------
+    float array
+        the soft-thrsholded array
+    """
     return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
 
 
