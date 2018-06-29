@@ -3,7 +3,7 @@
 Welcome to plastic_net's documentation!
 ====================================
 
-`Shablona` is a template for a small scientific Python project. 
+`Plastic Net` is a template for a small scientific Python project. 
 
 To see how to use it, please refer to the `README file 
 <https://github.com/uwescience/plastic_net/blob/master/README.md>`_ in the Github repository.

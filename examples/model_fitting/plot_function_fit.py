@@ -3,7 +3,7 @@
 Fitting a function with plastic_net
 ================================
 
-Shablona contains a number of tools for fitting functions to
+Plastic Net contains a number of tools for fitting functions to
 data. This example shows us how to load data into python, fit
 a function to our datapoints with plastic_net, and then plot the
 result.

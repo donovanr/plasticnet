@@ -1,4 +1,4 @@
-Shablona Gallery
+Plastic Net Gallery
 ================
 
 This is the main gallery page for sphinx-gallery. It contains preview

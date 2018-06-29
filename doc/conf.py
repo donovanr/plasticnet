@@ -18,7 +18,7 @@ import os
 
 # General information about the project.
 project = 'plastic_net'
-copyright = '2015, Ariel Rokem'
+copyright = '2015, Rory Donovan-Maiye'
 
 currentdir = os.path.abspath(os.path.dirname(__file__))
 ver_file = os.path.join(currentdir, '..', project, 'version.py')
@@ -237,7 +237,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'plastic_net.tex', 'plastic_net Documentation',
-   'Ariel Rokem', 'manual'),
+   'Rory Donovan-Maiye', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -267,7 +267,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'plastic_net', 'plastic_net Documentation',
-     ['Ariel Rokem'], 1)
+     ['Rory Donovan-Maiye'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -281,7 +281,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'plastic_net', 'plastic_net Documentation',
-   'Ariel Rokem', 'plastic_net', 'One line description of project.',
+   'Rory Donovan-Maiye', 'plastic_net', 'One line description of project.',
    'Miscellaneous'),
 ]
 
