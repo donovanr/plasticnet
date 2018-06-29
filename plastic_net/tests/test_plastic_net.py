@@ -5,7 +5,7 @@ import pandas as pd
 import numpy.testing as npt
 import plastic_net as sb
 
-data_path = op.join(sb.__path__[0], 'data')
+data_path = op.join(sb.__path__[0], "data")
 
 
 def test_transform_data():
@@ -17,17 +17,18 @@ def test_transform_data():
     # We start with actual data. We test here just that reading the data in
     # different ways ultimately generates the same arrays.
     from matplotlib import mlab
-    ortho = mlab.csv2rec(op.join(data_path, 'ortho.csv'))
+
+    ortho = mlab.csv2rec(op.join(data_path, "ortho.csv"))
     x1, y1, n1 = sb.transform_data(ortho)
-    x2, y2, n2 = sb.transform_data(op.join(data_path, 'ortho.csv'))
+    x2, y2, n2 = sb.transform_data(op.join(data_path, "ortho.csv"))
     npt.assert_equal(x1, x2)
     npt.assert_equal(y1, y2)
     # We can also be a bit more critical, by testing with data that we
     # generate, and should produce a particular answer:
     my_data = pd.DataFrame(
-        np.array([[0.1, 2], [0.1, 1], [0.2, 2], [0.2, 2], [0.3, 1],
-                  [0.3, 1]]),
-        columns=['contrast1', 'answer'])
+        np.array([[0.1, 2], [0.1, 1], [0.2, 2], [0.2, 2], [0.3, 1], [0.3, 1]]),
+        columns=["contrast1", "answer"],
+    )
     my_x, my_y, my_n = sb.transform_data(my_data)
     npt.assert_equal(my_x, np.array([0.1, 0.2, 0.3]))
     npt.assert_equal(my_y, np.array([0.5, 0, 1.0]))
@@ -95,11 +96,9 @@ def test_params_regression():
     """
 
     model = sb.Model()
-    ortho_x, ortho_y, ortho_n = sb.transform_data(op.join(data_path,
-                                                          'ortho.csv'))
+    ortho_x, ortho_y, ortho_n = sb.transform_data(op.join(data_path, "ortho.csv"))
 
-    para_x, para_y, para_n = sb.transform_data(op.join(data_path,
-                                                       'para.csv'))
+    para_x, para_y, para_n = sb.transform_data(op.join(data_path, "para.csv"))
 
     ortho_fit = model.fit(ortho_x, ortho_y)
     para_fit = model.fit(para_x, para_y)
