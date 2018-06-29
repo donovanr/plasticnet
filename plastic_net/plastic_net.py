@@ -24,7 +24,6 @@ def soft_thresh(lam, x):
     return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
 
 
-# (general) plastic net
 @jit(nopython=True, nogil=True, cache=True)
 def _solve_gpnet(
     beta,
@@ -67,7 +66,7 @@ def _solve_gpnet(
         maximum number of update passes through all P elements of beta, in case thesh is never met
 
     Modifies
-    ________
+    --------
     beta
     residual
     """
