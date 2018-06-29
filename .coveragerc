@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = plastic_net/*
+include = plastic_net/*
+omit = */setup.py
+[report]
+include = plastic_net/*
