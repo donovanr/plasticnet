@@ -1,11 +1,9 @@
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import pandas as pd
-import scipy.optimize as opt
-from scipy.special import erf
-from .due import due, Doi
+import numba as nb
+from numba import jit, jitclass, float32, int64
 
-__all__ = ["Model", "Fit", "opt_err_func", "transform_data", "cumgauss"]
+__all__ = ["TimePoint"]
 
 
 # Use duecredit (duecredit.org) to provide a citation to relevant work to
@@ -17,195 +15,153 @@ due.cite(Doi("10.1167/13.9.30"),
          path='plastic_net')
 
 
-def transform_data(data):
-    """
-    Function that takes experimental data and gives us the
-    dependent/independent variables for analysis.
-
-    Parameters
-    ----------
-    data : Pandas DataFrame or string.
-        If this is a DataFrame, it should have the columns `contrast1` and
-        `answer` from which the dependent and independent variables will be
-        extracted. If this is a string, it should be the full path to a csv
-        file that contains data that can be read into a DataFrame with this
-        specification.
-
-    Returns
-    -------
-    x : array
-        The unique contrast differences.
-    y : array
-        The proportion of '2' answers in each contrast difference
-    n : array
-        The number of trials in each x,y condition
-    """
-    if isinstance(data, str):
-        data = pd.read_csv(data)
-
-    contrast1 = data['contrast1']
-    answers = data['answer']
-
-    x = np.unique(contrast1)
-    y = []
-    n = []
-
-    for c in x:
-        idx = np.where(contrast1 == c)
-        n.append(float(len(idx[0])))
-        answer1 = len(np.where(answers[idx[0]] == 1)[0])
-        y.append(answer1 / n[-1])
-    return x, y, n
+# soft thresholding operator
+# TODO test whether mat is faster than numpy
+@jit(nopython=True, nogil=True, cache=True)
+def soft_thresh(lam, x):
+    return np.sign(x)*np.maximum(np.abs(x) - lam, 0)
 
 
-def cumgauss(x, mu, sigma):
-    """
-    The cumulative Gaussian at x, for the distribution with mean mu and
-    standard deviation sigma.
+# (general) plastic net
+@jit(nopython=True, nogil=True, cache=True)
+def _solve_gpnet(X, xi, zeta, beta, residual, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+    """Hard plastic net regression.  Given a data matrix X and a target vector y, this fucntion finds the beta that minimizes
+    ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
 
-    Parameters
-    ----------
-    x : float or array
-       The values of x over which to evaluate the cumulative Gaussian function
+    N,D = X.shape
 
-    mu : float
-       The mean parameter. Determines the x value at which the y value is 0.5
+    lambda1 = alpha*lambda_total
+    lambda2 = (1.0-alpha)*lambda_total
 
-    sigma : float
-       The variance parameter. Determines the slope of the curve at the point
-       of Deflection
+    delta_b = np.ones_like(beta)*thresh + 1
+    iter_num = 0
 
-    Returns
-    -------
-
-    g : float or array
-        The cumulative gaussian with mean $\\mu$ and variance $\\sigma$
-        evaluated at all points in `x`.
-
-    Notes
-    -----
-    Based on:
-    http://en.wikipedia.org/wiki/Normal_distribution#Cumulative_distribution_function
-
-    The cumulative Gaussian function is defined as:
-
-    .. math::
-
-        \\Phi(x) = \\frac{1}{2} [1 + erf(\\frac{x}{\\sqrt{2}})]
-
-    Where, $erf$, the error function is defined as:
-
-    .. math::
-
-        erf(x) = \\frac{1}{\\sqrt{\\pi}} \int_{-x}^{x} e^{t^2} dt
-
-    """
-    return 0.5 * (1 + erf((x - mu) / (np.sqrt(2) * sigma)))
+    while np.max(delta_b) > thresh and iter_num < max_iters:
+        iter_num += 1
+        for j in np.random.permutation(D):
+            b_new = soft_thresh(lambda1, np.dot(X[:,j], residual)/N + lambda_2*zeta[j] - (1+lambda_2)*xi[j] + beta[j])/(1.0 + lambda2) + xi[j]
+            delta_b[j] = b_new - beta[j]
+            residual -= X[:,j]*delta_b[j]
+            beta[j] = b_new
 
 
-def opt_err_func(params, x, y, func):
-    """
-    Error function for fitting a function using non-linear optimization.
+# jit class spec
+spec = [('X', float32[:,:]),
+        ('y', float32[:]),
+        ('xi', float32[:]),
+        ('zeta', float32[:]),
+        ('beta', float32[:]),
+        ('residual', float32[:]),
+        ('thresh', float32),
+        ('max_iters', int64)]
 
-    Parameters
-    ----------
-    params : tuple
-        A tuple with the parameters of `func` according to their order of
-        input
+# jitted timepoint class that will live on graph nodes
+@jitclass(spec)
+class TimePoint(object):
+    """This class encapsulates a single (X,y) data set, e.g. one time-point"""
 
-    x : float array
-        An independent variable.
+    def __init__(self, X, y):
 
-    y : float array
-        The dependent variable.
+        self.X = X
+        self.y = y
+        self.beta = np.zeros(X.shape[1]).astype(np.float32)
+        self.residual = y.copy()
+        self.xi = np.zeros_like(self.beta)
+        self.zeta = np.zeros_like(self.beta)
+        self.zero = np.zeros_like(self.beta)
 
-    func : function
-        A function with inputs: `(x, *params)`
+    def solve_OLS(self, thresh=1e-8, max_iters=100):
+        """OLS regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2"""
+        _solve_gpnet(self.X, self.zero, self.zero, self.beta, self.residual, lambda_total=0, alpha=0, thresh=thresh, max_iters=max_iters)
 
-    Returns
-    -------
-    float array
-        The marginals of the fit to x/y given the params
-    """
-    return y - func(x, *params)
+    def solve_ridge(self, lambda_total=1.0, thresh=1e-8, max_iters=100):
+        """Ridge regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + lambda||beta||_2^2"""
+        _solve_gpnet(self.X, self.zero, self.zero, self.beta, self.residual, lambda_total=lambda_total, alpha=0, thresh=thresh, max_iters=max_iters)
+
+    def solve_lasso(self, lambda_total=1.0, thresh=1e-8, max_iters=100):
+        """Lasso regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
+        _solve_gpnet(self.X, self.zero, self.zero, self.beta, self.residual, lambda_total=lambda_total, alpha=1, thresh=thresh, max_iters=max_iters)
+
+    def solve_enet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Elastic net regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + alpha*lambda||beta||_1 + (1-alpha)*lambda||beta||_2^2"""
+        _solve_gpnet(self.X, self.zero, self.zero, self.beta, self.residual, lambda_total=lambda_total, alpha=alpha, thresh=thresh, max_iters=max_iters)
+
+    def solve_pridge(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Plastic ridge regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + lambda||beta-zeta||_2^2"""
+        _solve_gpnet(self.X, self.zero, self.zero, self.beta, self.residual, lambda_total=lambda_total, alpha=0, thresh=thresh, max_iters=max_iters)
+        
+    def solve_plasso(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Plastic Lasso regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + lambda||beta-xi||_1"""
+        _solve_gpnet(self.X, self.zero, self.zero, self.beta, self.residual, lambda_total=lambda_total, alpha=1, thresh=thresh, max_iters=max_iters)
+
+    def solve_hpnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Hard plastic net regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + lambda||beta-xi||_1 + (1-alpha)*lambda||beta||_2^2"""
+        _solve_gpnet(self.X, self.xi, self.zero, self.beta, self.residual, lambda_total=lambda_total, alpha=alpha, thresh=thresh, max_iters=max_iters)
+
+    def solve_spnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Soft plastic net regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + alpha*lambda||beta||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
+        _solve_gpnet(self.X, self.zero, self.zeta, self.beta, self.residual, lambda_total=lambda_total, alpha=alpha, thresh=thresh, max_iters=max_iters)
+
+    def solve_upnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Unified plastic net regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-xi||_2^2"""
+        _solve_gpnet(self.X, self.xi, self.xi, self.beta, self.residual, lambda_total=lambda_total, alpha=alpha, thresh=thresh, max_iters=max_iters)
+
+    def solve_gpnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+        """Hard plastic net regression.  This function finds the beta that minimizes
+        ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
+        _solve_gpnet(self.X, self.xi, self.zeta, self.beta, self.residual, lambda_total=lambda_total, alpha=alpha, thresh=thresh, max_iters=max_iters)
 
 
-class Model(object):
-    """Class for fitting cumulative Gaussian functions to data"""
-    def __init__(self, func=cumgauss):
-        """ Initialize a model object.
+# nx code to get nth neighbors, inclusive
+def neighborhood(G, node, n):
+    path_lengths = nx.single_source_dijkstra_path_length(G, node)
+    return [node for node, length in path_lengths.items() if length <= n]
 
-        Parameters
-        ----------
-        data : Pandas DataFrame
-            Data from a subjective contrast judgement experiment
+# methods for computing bias targets
+def get_xi(G, n, method='mean'):    
+    if method=='mean':
+        info = [G.nodes[m]['data'].beta for m in G.neighbors(n)]
+        mean = np.mean(info, axis=0).astype(np.float32)
+        return mean
+    elif method=='mean of nonzero neighbors':
+        # for each gene, if neighboring time points are both nonzero, use their mean, otherwise use zero
+        neighbor_nz = np.array([G.nodes[m]['data'].beta != 0 for m in G.neighbors(n)]).astype(np.float32)
+        neighbor_betas = np.array([G.nodes[m]['data'].beta for m in G.neighbors(n)]).astype(np.float32)
+        mask = np.prod(neighbor_nz, axis=0)
+        xi = np.mean(neighbor_betas, axis=0)
+        return mask*xi
+    elif method=='mean of nonzero neighbors minus loners':
+        # for each gene, if neighboring time points are both nonzero, use their mean, if both are zero, use minus what you are, otherwise use zero
+        neighbor_nz = np.array([G.nodes[m]['data'].beta != 0 for m in G.neighbors(n)]).astype(np.float32)
+        neighbor_az = np.array([G.nodes[m]['data'].beta == 0 for m in G.neighbors(n)]).astype(np.float32)
+        neighbor_betas = np.array([G.nodes[m]['data'].beta for m in G.neighbors(n)]).astype(np.float32)
+        nz_mask = np.prod(neighbor_nz, axis=0)
+        az_mask = np.prod(neighbor_az, axis=0)
+        neighbor_mean = np.mean(neighbor_betas, axis=0)
+        beta_self = G.nodes[n]['data'].beta
+        return nz_mask*neighbor_mean - 0.5*az_mask*beta_self
+    elif method=='mean of nonzero next nearest neighbors':
+        mask = np.prod([G.nodes[m]['data'].beta != 0 for m in neighborhood(G,n,2) if m!=n], axis=0).astype(np.float32)
+        xi = np.mean([G.nodes[m]['data'].beta for m in G.neighbors(n)], axis=0).astype(np.float32)
+        return mask*xi
+    elif method=='mean of neighbors masked by median':
+        info = [G.nodes[m]['data'].beta for m in neighborhood(G,n,1)]
+        mean = np.mean(info, axis=0).astype(np.float32)
+        median_mask = (np.median(info, axis=0).astype(np.float32) > 0).astype(np.float32)
+        return mean*median_mask
+    elif method=='mean of next neighbors masked by median':
+        info = [G.nodes[m]['data'].beta for m in neighborhood(G,n,2)]
+        mean = np.mean(info, axis=0).astype(np.float32)
+        median_mask = (np.median(info, axis=0).astype(np.float32) > 0).astype(np.float32)
+        return mean*median_mask
 
-        func : callable, optional
-            A function that relates x and y through a set of parameters.
-            Default: :func:`cumgauss`
-        """
-        self.func = func
 
-    def fit(self, x, y, initial=[0.5, 1]):
-        """
-        Fit a Model to data.
-
-        Parameters
-        ----------
-        x : float or array
-           The independent variable: contrast values presented in the
-           experiment
-        y : float or array
-           The dependent variable
-
-        Returns
-        -------
-        fit : :class:`Fit` instance
-            A :class:`Fit` object that contains the parameters of the model.
-
-        """
-        params, _ = opt.leastsq(opt_err_func, initial,
-                                args=(x, y, self.func))
-        return Fit(self, params)
-
-
-class Fit(object):
-    """
-    Class for representing a fit of a model to data
-    """
-    def __init__(self, model, params):
-        """
-        Initialize a :class:`Fit` object.
-
-        Parameters
-        ----------
-        model : a :class:`Model` instance
-            An object representing the model used
-
-        params : array or list
-            The parameters of the model evaluated for the data
-
-        """
-        self.model = model
-        self.params = params
-
-    def predict(self, x):
-        """
-        Predict values of the dependent variable based on values of the
-        indpendent variable.
-
-        Parameters
-        ----------
-        x : float or array
-            Values of the independent variable. Can be values presented in
-            the experiment. For out-of-sample prediction (e.g. in
-            cross-validation), these can be values
-            that were not presented in the experiment.
-
-        Returns
-        -------
-        y : float or array
-            Predicted values of the dependent variable, corresponding to
-            values of the independent variable.
-        """
-        return self.model.func(x, *self.params)
