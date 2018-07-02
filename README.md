@@ -1,5 +1,5 @@
 ## plastic_net
-[![Build Status](https://travis-ci.org/donovanr/plastic_net.svg?branch=master)](https://travis-ci.org/donovanr/plastic_net)
+[![Build Status](https://www.travis-ci.com/donovanr/plastic_net.svg?branch=master)](https://www.travis-ci.com/donovanr/plastic_net)
 
 Plastic Net is a template project for small scientific python projects. The
 recommendations we make here follow the standards and conventions of much of
