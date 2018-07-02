@@ -5,3 +5,4 @@ _build/
 auto_examples/
 gen_api/
 .cache
+*.egg-info
