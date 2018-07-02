@@ -5,6 +5,5 @@ cache: pip
 install:
   - pip install pytest numpy numba networkx
   - pip install -e .
-
 script:
   - pytest
