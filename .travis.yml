@@ -7,5 +7,4 @@ install:
   - pip install -e .
 
 script:
-- py.test --pyargs plastic_net --cov-report term-missing --cov=plastic_net
-
+  - pytest
