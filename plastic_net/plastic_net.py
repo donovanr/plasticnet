@@ -10,19 +10,26 @@ __all__ = ["TimePoint"]
 @jit(nopython=True, nogil=True, cache=True)
 def soft_thresh(lam, x):
     """
-    Soft thresholding operator
+    Soft thresholding operator.  Takes a numpy ndarray of floats and reutrns and element-wise soft-thesholded version.
 
-    Parameters
-    ----------
-    lam : float
-        the soft thresholding penalty. must be non-negative.
-    x : float array
-        the array to be soft thresholded element-wise.
+    Element-wise, the soft-thresholding operator :math:`S_\lambda(x)` is given by:
 
-    Returns
-    -------
-    float array
-        the soft-thrsholded array
+    .. math::
+
+        \begin{equation*}
+            \S_\lambda(x) =
+                \begin{cases}
+                    x + \lambda, & \text{if $x < -\lambda$} \\
+                    0          , & \text{if $-\lambda < x < \lambda$} \\
+                    x - \lambda, & \text{if $x > \lambda$}
+                \end{cases}
+        \end{equation*},
+
+    where :math:`\lambda` is a scalar tresholding parameter.
+
+    Args:
+        lam (float): threshold value
+        x (ndarry): numpy array of floats to be soft thresholded
     """
     return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
 
@@ -89,8 +96,8 @@ def _solve_gpnet(
                 soft_thresh(
                     lambda1,
                     np.dot(X[:, j], residual) / N
-                    + lambda_2 * zeta[j]
-                    - (1 + lambda_2) * xi[j]
+                    + lambda2 * zeta[j]
+                    - (1 + lambda2) * xi[j]
                     + beta[j],
                 )
                 / (1.0 + lambda2)

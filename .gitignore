@@ -2,6 +2,7 @@
 *~
 *.DS_Store
 _build/
+docs/build
 auto_examples/
 gen_api/
 .cache
