@@ -7,9 +7,12 @@ Welcome to Plastic Net's documentation!
 =======================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Package Reference
 
+   plastic_net
+   chronosynclastic_net
+   utils
 
 
 Indices and tables
