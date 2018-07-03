@@ -34,17 +34,7 @@ long_description = """
 
 Plastic Net
 ========
-Plastic Net is a template project for small scientific Python projects.
-
-It contains software implementations of an analysis of some simple data, but
-more importantly, it contains infrastructure for testing, documentation,
-continuous integration and deployment, which can be easily adapted
-to use in other projects.
-
-To get started using these components in your own software, please go to the
-repository README_.
-
-.. _README: https://github.com/donovanr/plastic_net/blob/master/README.md
+Plastic Net is a generalization of the Elastic Net.  More details will be forthcoming.
 
 License
 =======
