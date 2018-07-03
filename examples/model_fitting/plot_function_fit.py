@@ -17,17 +17,18 @@ import os.path as op
 import numpy as np
 import matplotlib.pyplot as plt
 import plastic_net as sb
-plt.style.use('ggplot')
+
+plt.style.use("ggplot")
 
 ###############################################################################
 # Loading data
 # ------------
 #
 # First, we'll load some data into plastic_net.
-data_path = op.join(sb.__path__[0], 'data')
+data_path = op.join(sb.__path__[0], "data")
 
-ortho_x, ortho_y, ortho_n = sb.transform_data(op.join(data_path, 'ortho.csv'))
-para_x, para_y, para_n = sb.transform_data(op.join(data_path, 'para.csv'))
+ortho_x, ortho_y, ortho_n = sb.transform_data(op.join(data_path, "ortho.csv"))
+para_x, para_y, para_n = sb.transform_data(op.join(data_path, "para.csv"))
 
 ###############################################################################
 # Fitting a model
@@ -60,15 +61,15 @@ x_predict = np.linspace(0, 1, 100)
 
 # Make the first plot
 for x, y, n in zip(ortho_x, ortho_y, ortho_n):
-    ax.plot(x, y, 'bo', markersize=n)
-    ax.plot(x_predict, ortho_fit.predict(x_predict), 'b')
+    ax.plot(x, y, "bo", markersize=n)
+    ax.plot(x_predict, ortho_fit.predict(x_predict), "b")
 
 # Make the second plot
 for x, y, n in zip(para_x, para_y, para_n):
-    ax.plot(x, y, 'go', markersize=n)
-    ax.plot(x_predict, para_fit.predict(x_predict), 'g')
+    ax.plot(x, y, "go", markersize=n)
+    ax.plot(x_predict, para_fit.predict(x_predict), "g")
 
-ax.set_xlabel('Contrast in interval 1')
+ax.set_xlabel("Contrast in interval 1")
 ax.set_ylabel("Proportion answers '1'")
 ax.set_ylim([-0.1, 1.1])
 ax.set_xlim([-0.1, 1.1])

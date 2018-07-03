@@ -70,7 +70,7 @@ y = .2 * x + .4 * np.random.randn(N)
 # variables and the image will be shown below:
 
 fig, ax = plt.subplots()
-ax.plot(x, y, 'o')
+ax.plot(x, y, "o")
 
 ###############################################################################
 # Multiple images
