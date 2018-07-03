@@ -1,2 +1,2 @@
-.. automodule:: plastic_net.utils
+.. automodule:: utils
       :members:
