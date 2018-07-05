@@ -12,20 +12,18 @@ def soft_thresh(lam, x):
     Element-wise, the soft-thresholding operator :math:`S_\lambda(x)` is given by:
 
     .. math::
-
-        \begin{equation*}
-            \S_\lambda(x) =
-                \begin{cases}
-                    x + \lambda, & \text{if $x < -\lambda$} \\
-                    0          , & \text{if $-\lambda < x < \lambda$} \\
-                    x - \lambda, & \text{if $x > \lambda$}
-                \end{cases}
-        \end{equation*},
+        \S_\lambda(x) =
+            \begin{cases}
+                x + \lambda, & \text{if} x < -\lambda \\
+                0          , & \text{if} -\lambda < x < \lambda \\
+                x - \lambda, & \text{if} x > \lambda
+            \end{cases}
 
     where :math:`\lambda` is a scalar tresholding parameter.
 
     Args:
         lam (float): threshold value
         x (ndarry): numpy array of floats to be soft thresholded
+
     """
     return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
