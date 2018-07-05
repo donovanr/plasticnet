@@ -3,9 +3,6 @@
 plastic_net.utils
 =================
 
-.. automodule:: plastic_net.utils
-.. currentmodule:: plastic_net.utils
-
 Functions
 ---------
 
