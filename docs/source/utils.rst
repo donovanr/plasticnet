@@ -1,3 +1,5 @@
+.. _utils
+
 plastic_net.utils
 =================
 

@@ -36,13 +36,13 @@ Here is an example of a link in reStructuredText `GitHub <https://github.com>`_.
 Reference Example
 ------------------
 
-For more information about how to use this library, see the :ref:`api`.
+For more information about how to use this library, see the :ref:`utils`.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
-   api
+   utils
 
 Indices and tables
 ==================
