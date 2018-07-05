@@ -2,8 +2,6 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 from numba import jit
 
-__all__ = ["soft_thresh"]
-
 
 # TODO test whether math is faster than numpy
 @jit(nopython=True, nogil=True, cache=True)
