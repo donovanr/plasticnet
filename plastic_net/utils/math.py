@@ -6,12 +6,13 @@ from numba import jit
 # TODO test whether math is faster than numpy
 @jit(nopython=True, nogil=True, cache=True)
 def soft_thresh(lam, x):
-    """
-    Soft thresholding operator.  Takes a numpy ndarray of floats and reutrns and element-wise soft-thesholded version.
+    r"""
+    Soft thresholding operator.  Takes a numpy ndarray of floats and returns and element-wise soft-thesholded version.
 
     Element-wise, the soft-thresholding operator :math:`S_\lambda(x)` is given by:
 
     .. math::
+
         \S_\lambda(x) =
             \begin{cases}
                 x + \lambda, & \text{if} x < -\lambda \\
