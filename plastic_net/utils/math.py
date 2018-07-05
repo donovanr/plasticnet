@@ -13,11 +13,11 @@ def soft_thresh(lam, x):
 
     .. math::
 
-        \S_\lambda(x) =
+        S_\lambda(x) =
             \begin{cases}
-                x + \lambda, & \text{if} x < -\lambda \\
-                0          , & \text{if} -\lambda < x < \lambda \\
-                x - \lambda, & \text{if} x > \lambda
+                x + \lambda, & \text{if} \quad x < -\lambda \\
+                0          , & \text{if} \quad -\lambda < x < \lambda \\
+                x - \lambda, & \text{if} \quad x > \lambda
             \end{cases}
 
     where :math:`\lambda` is a scalar tresholding parameter.
