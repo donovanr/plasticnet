@@ -42,6 +42,7 @@ For more information about how to use this library, see the :ref:`utils`.
    :maxdepth: 2
    :caption: Contents:
    
+   plastic_net
    utils
 
 Indices and tables
