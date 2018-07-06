@@ -1,15 +1,31 @@
-## Plastic Net
+# Plastic Net
 [![Build Status](https://www.travis-ci.com/donovanr/plastic_net.svg?branch=master)](https://www.travis-ci.com/donovanr/plastic_net)
 [![Documentation Status](https://readthedocs.org/projects/plastic-net/badge/)](https://plastic-net.readthedocs.io/)
 
-Plastic Net is a genralization of the Elastic Net.
+Plastic Net is a generalization of the Elastic Net.
 
-### Installation
-
+## Installation
 ```
 git clone https://github.com/donovanr/plastic_net.git
 cd plastic_net
 pip install -e .
 ```
-### Documentation
-[Read the docs](https://plastic-net.readthedocs.io/)
+
+## Development
+We use:
+- [Travis CI](https://travis-ci.org/) for testing
+- [Read the Docs](https://readthedocs.org/) for auto-generating and publishing the documentation
+- [pre-commit hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) for formatting and linting
+
+### Travis
+The Travis configuration is in [.travis.yml](../master/.travis.yml), and doesn't have anything fancy set up.
+
+### Read the Docs
+Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http://www.sphinx-doc.org/en/master/usage/quickstart.html#autodoc) lives in [docs/source/conf.py](../master/docs/source/conf.py).  To get things to build with Read the Docs, you need to set up a virtual environment in the admin options there so that dependencies like `numpy` can be installed.
+
+### Pre-Commit Hooks
+Pre-commit hooks are configured in [.pre-commit-config.yaml](../master/.pre-commit-config.yaml), and need to be set up (once) with `pre-commit install`.  [pre-commit](https://pre-commit.com/) itself can be installed with `pip`.
+
+The pre-commit hooks we use are:
+- [Black](https://black.readthedocs.io/en/stable/), with the default settings, for formatting
+- [Pyflakes](https://github.com/PyCQA/pyflakes), for linting
