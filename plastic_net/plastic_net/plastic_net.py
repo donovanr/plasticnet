@@ -49,7 +49,7 @@ def solve_gpnet(
     """
     General plastic net regression.  This function finds the beta that minimizes
     ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2
-    
+
     Parameters
     ----------
     beta : Numpy array
@@ -119,6 +119,7 @@ spec = [
     ("thresh", float32),
     ("max_iters", int64),
 ]
+
 
 # jitted timepoint class that will live on graph nodes
 @jitclass(spec)

@@ -1,0 +1,28 @@
+[flake8]
+
+exclude =
+    .git,
+    __pycache__,
+    docs/source/conf.py,
+    build
+ignore =
+    E501,
+    W503
+builtins =
+    _,
+    NAME,
+    MAINTAINER,
+    MAINTAINER_EMAIL,
+    DESCRIPTION,
+    LONG_DESCRIPTION,
+    URL,
+    DOWNLOAD_URL,
+    LICENSE,
+    CLASSIFIERS,
+    AUTHOR,
+    AUTHOR_EMAIL,
+    PLATFORMS,
+    VERSION,
+    PACKAGES,
+    PACKAGE_DATA,
+    REQUIRES
