@@ -18,6 +18,35 @@ def solve_gpnet(
 ):
     """
     General plastic net regression.  This function finds the beta that minimizes
+    ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2
+    Parameters
+    ----------
+    beta : Numpy array
+        shape (P,) initial guess for the solution to the regression
+        modified in-place
+    residual : Numpy array
+        shape (N,) residual, i.e residual = y - X@beta
+        modified in-place
+    X : Numpy array
+        shape (N,P) data matrix
+    xi : Numpy array
+        shape (P,) target for L1 penalty
+    zeta : Numpy array
+        shape (P,) target for L2 penalty
+    lambda_total : float
+        must be non-negative. total regularization penalty strength
+    alpha : float
+        must be between zero and one.  mixing parameter between L1 and L1 penalties.
+        alpha=0 is pure L2 penalty, alpha=1 is pure L1 penalty
+    thresh : float
+        convergence criterion for coordinate descent
+        coordinate descent runs until the bigest element-wise change in beta is less than thresh
+    max_iters : int
+        maximum number of update passes through all P elements of beta, in case thesh is never met
+    Modifies
+    --------
+    beta
+    residual
     """
 
     N, D = X.shape
