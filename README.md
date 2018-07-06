@@ -28,4 +28,4 @@ Pre-commit hooks are configured in [.pre-commit-config.yaml](../master/.pre-comm
 
 The pre-commit hooks we use are:
 - [Black](https://black.readthedocs.io/en/stable/) for formatting, with the default settings
-- [Flake8](http://flake8.pycqa.org/en/latest/), for linting, with configurations in [.flake8](../master/.flake8)
+- [Flake8](http://flake8.pycqa.org/en/latest/) for linting, with configurations in [.flake8](../master/.flake8)
