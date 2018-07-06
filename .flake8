@@ -6,8 +6,9 @@ exclude =
     docs/source/conf.py,
     build
 ignore =
-    E501,
-    W503
+    E501, # max line length
+    W503, # breaking before binary operators
+    E302  # multi-line empty space / comments bug
 builtins =
     _,
     NAME,
