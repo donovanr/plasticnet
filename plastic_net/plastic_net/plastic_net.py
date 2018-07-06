@@ -3,8 +3,6 @@ import numpy as np
 import networkx as nx
 from numba import jit, jitclass, float32, int64
 
-__all__ = ["TimePoint"]
-
 
 # TODO test whether math is faster than numpy
 @jit(nopython=True, nogil=True, cache=True)
