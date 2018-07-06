@@ -7,3 +7,4 @@ auto_examples/
 gen_api/
 .cache
 *.egg-info
+__pycache__
