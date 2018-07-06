@@ -27,5 +27,5 @@ Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http:/
 Pre-commit hooks are configured in [.pre-commit-config.yaml](../master/.pre-commit-config.yaml), and need to be set up (once) with `pre-commit install`.  [pre-commit](https://pre-commit.com/) itself can be installed with `pip`.
 
 The pre-commit hooks we use are:
-- [Black](https://black.readthedocs.io/en/stable/), with the default settings, for formatting
-- [Pyflakes](https://github.com/PyCQA/pyflakes), for linting
+- [Black](https://black.readthedocs.io/en/stable/) for formatting, with the default settings
+- [Flake8](http://flake8.pycqa.org/en/latest/), for linting, with configurations in [.flake8](../master/.flake8)
