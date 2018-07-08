@@ -1,4 +1,3 @@
-from __future__ import absolute_import, division, print_function
 import numpy as np
 import networkx as nx
 from numba import jit, jitclass, float32, int64
