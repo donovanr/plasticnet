@@ -6,6 +6,10 @@ from numba import jit, jitclass, float32, int64
 from ..utils.math import soft_thresh
 
 
+def pnet_soft_thresh(lam, x):
+    """Just wraps the import to test it"""
+    return soft_thresh(lam, x)
+
 @jit(nopython=True, nogil=True, cache=True)
 def solve_gpnet(
     beta,
