@@ -1,6 +1,6 @@
 plasticnet.utils
 =================
 
-.. automodule:: utils
+.. automodule:: plasticnet.utils
     :members:
     :undoc-members:
