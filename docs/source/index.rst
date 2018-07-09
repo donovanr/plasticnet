@@ -9,7 +9,7 @@ Welcome to Plastic Net's documentation!
 .. warning:: This package is in active development and is **absolutely not** ready for use by the public.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
    
    plasticnet
