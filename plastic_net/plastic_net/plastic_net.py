@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 from numba import jit, jitclass, float32, int64
 
-from plastic_net.utils import soft_thresh
+from ..utils import soft_thresh
 
 
 def pnet_soft_thresh(lam, x):
