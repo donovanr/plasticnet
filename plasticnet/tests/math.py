@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.testing as npt
 
-from plasticnet.utils.math import soft_thresh
+from ..utils.math import soft_thresh
 
 
 def test_soft_thresh():
