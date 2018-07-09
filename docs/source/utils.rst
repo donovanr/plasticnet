@@ -1,4 +1,4 @@
-plastic_net.utils
+plasticnet.utils
 =================
 
 .. automodule:: utils

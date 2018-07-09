@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 from numba import jitclass, float32, int64
 
-from .plastic_net import solve_gpnet
+from .plasticnet import solve_gpnet
 
 # jit class spec
 spec = [

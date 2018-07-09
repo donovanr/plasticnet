@@ -12,7 +12,7 @@ Welcome to Plastic Net's documentation!
    :maxdepth: 2
    :caption: Contents:
    
-   plastic_net
+   plasticnet
    utils
 
 Indices and tables

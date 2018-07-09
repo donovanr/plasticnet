@@ -27,7 +27,7 @@ CLASSIFIERS = [
 ]
 
 # Description should be a one-liner:
-description = "plastic_net: a generalization of the elastic net"
+description = "plasticnet: a generalization of the elastic net"
 # Long description will go up on the pypi page
 long_description = """
 
@@ -37,7 +37,7 @@ Plastic Net is a generalization of the Elastic Net.  More details will be forthc
 
 License
 =======
-``plastic_net`` is licensed under the terms of the MIT license. See the file
+``plasticnet`` is licensed under the terms of the MIT license. See the file
 "LICENSE" for information on the history of this software, terms & conditions
 for usage, and a DISCLAIMER OF ALL WARRANTIES.
 
@@ -46,12 +46,12 @@ All trademarks referenced herein are property of their respective holders.
 Copyright (c) 2018--, Rory Donovan-Maiye.
 """
 
-NAME = "plastic_net"
+NAME = "plasticnet"
 MAINTAINER = "Rory Donovan-Maiye"
 MAINTAINER_EMAIL = "donovanr@gmail.com"
 DESCRIPTION = description
 LONG_DESCRIPTION = long_description
-URL = "http://github.com/donovanr/plastic_net"
+URL = "http://github.com/donovanr/plasticnet"
 DOWNLOAD_URL = ""
 LICENSE = "MIT"
 AUTHOR = "Rory Donovan-Maiye"
@@ -61,5 +61,5 @@ MAJOR = _version_major
 MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
-PACKAGE_DATA = {"plastic_net": [pjoin("data", "*")]}
+PACKAGE_DATA = {"plasticnet": [pjoin("data", "*")]}
 REQUIRES = ["numpy", "numba", "networkx"]

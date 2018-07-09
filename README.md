@@ -6,8 +6,8 @@ Plastic Net is a generalization of the Elastic Net.
 
 ## Installation
 ```
-git clone https://github.com/donovanr/plastic_net.git
-cd plastic_net
+git clone https://github.com/donovanr/plasticnet.git
+cd plasticnet
 pip install -e .
 ```
 

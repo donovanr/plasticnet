@@ -1,6 +1,6 @@
-plastic_net.plastic_net
+plasticnet.plasticnet
 =======================
 
-.. automodule:: plastic_net
+.. automodule:: plasticnet
     :members:
     :undoc-members:

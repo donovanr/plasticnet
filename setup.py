@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 
 PACKAGES = find_packages()
 
-# Get version and release info, which is all stored in plastic_net/version.py
-ver_file = os.path.join("plastic_net", "version.py")
+# Get version and release info, which is all stored in plasticnet/version.py
+ver_file = os.path.join("plasticnet", "version.py")
 with open(ver_file) as f:
     exec(f.read())
 
