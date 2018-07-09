@@ -1,6 +1,6 @@
 # Plastic Net
-[![Build Status](https://www.travis-ci.com/donovanr/plastic_net.svg?branch=master)](https://www.travis-ci.com/donovanr/plastic_net)
-[![Documentation Status](https://readthedocs.org/projects/plastic-net/badge/)](https://plastic-net.readthedocs.io/)
+[![Build Status](https://www.travis-ci.com/donovanr/plasticnet.svg?branch=master)](https://www.travis-ci.com/donovanr/plasticnet)
+[![Documentation Status](https://readthedocs.org/projects/plasticnet/badge/)](https://plasticnet.readthedocs.io/)
 
 Plastic Net is a generalization of the Elastic Net.
 
