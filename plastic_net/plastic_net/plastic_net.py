@@ -2,12 +2,13 @@ import numpy as np
 import networkx as nx
 from numba import jit, jitclass, float32, int64
 
-from ..utils import soft_thresh
+from ..utils import math
 
 
 def pnet_soft_thresh(lam, x):
     """Just wraps the import to test it"""
-    return soft_thresh(lam, x)
+    return math.soft_thresh(lam, x)
+
 
 @jit(nopython=True, nogil=True, cache=True)
 def solve_gpnet(
@@ -66,7 +67,7 @@ def solve_gpnet(
         iter_num += 1
         for j in np.random.permutation(D):
             b_new = (
-                soft_thresh(
+                math.soft_thresh(
                     lambda1,
                     np.dot(X[:, j], residual) / N
                     + lambda2 * zeta[j]
