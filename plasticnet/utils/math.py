@@ -2,7 +2,6 @@ import numpy as np
 from numba import jit
 
 
-# TODO test whether math is faster than numpy
 @jit(nopython=True, nogil=True, cache=True)
 def soft_thresh(lam, x):
     r"""
@@ -21,9 +20,7 @@ def soft_thresh(lam, x):
 
     where :math:`\lambda` is a scalar tresholding parameter.
 
-    Args:
-        lam (float): threshold value
-        x (ndarry): numpy array of floats to be soft thresholded
-
+    :param float lam: threshold value
+    :param ndarry x: numpy array of floats to be soft thresholded
     """
     return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
