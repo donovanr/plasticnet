@@ -8,11 +8,18 @@ Welcome to Plastic Net's documentation!
 
 .. warning:: This package is in active development and is **absolutely not** ready for use by the public.
 
+Plastic Net
+-----------
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
-   
+
    plasticnet
+
+Utils
+-----
+.. toctree::
+   :maxdepth: 3
+
    utils
 
 Indices and tables
