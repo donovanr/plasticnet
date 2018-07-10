@@ -2,8 +2,6 @@
 [![Build Status](https://www.travis-ci.com/donovanr/plasticnet.svg?branch=master)](https://www.travis-ci.com/donovanr/plasticnet)
 [![Documentation Status](https://readthedocs.org/projects/plasticnet/badge/?version=latest)](https://plasticnet.readthedocs.io/en/latest/?badge=latest)
 
-Plastic Net is a generalization of the Elastic Net.
-
 ## Installation
 
 We use [Conda](https://conda.io/) to manage the development environment, with dependencies listed in [environment.yml](../master/environment.yml). To install them, install `conda` using the instructions on their site, and then use
