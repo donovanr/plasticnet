@@ -17,22 +17,26 @@ def solve_gpnet(
     thresh=1e-8,
     max_iters=100,
 ):
-    """
+    r"""
+    solve_gpnet(beta, residual, X, xi, zeta, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100)
+
     General plastic net regression.  This function finds the beta that minimizes
-    ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2
 
-    Args:
-        beta (ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
-        residual (ndarray): shape (N,) residual, i.e residual = y - X@beta. modified in-place.
-        X (ndarray): shape (N,P) data matrix.
-        xi (ndarray): shape (P,) target for L1 penalty.
-        zeta (ndarray): shape (P,) target for L2 penalty.
-        lambda_total (float): must be non-negative. total regularization penalty strength.
-        alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. alpha=0 is pure L2 penalty, alpha=1 is pure L1 penalty.
-        thresh: (float) convergence criterion for coordinate descent. coordinate descent runs until the bigest element-wise change in beta is less than thresh.
-        max_iters: (int) maximum number of update passes through all P elements of beta, in case thesh is never met.
+    .. math::
 
-    .. note:: `beta` and `residual` are modified in-place.
+        ||y-X\cdot\beta||_2^2 + \alpha\cdot\lambda||\beta-\xi||_1 + (1-\alpha)\cdot\lambda||\beta-\zeta||_2^2
+
+    :param (ndarray) beta: shape (P,) initial guess for the solution to the regression. modified in-place.
+    :param ndarray residual: shape (N,) residual, i.e residual = y - X@beta. modified in-place.
+    :param ndarray X: shape (N,P) data matrix.
+    :param ndarray xi: shape (P,) target for L1 penalty.
+    :param ndarray zeta: shape (P,) target for L2 penalty.
+    :param float lambda_total: must be non-negative. total regularization penalty strength.
+    :param float alpha: mixing parameter between L1 and L1 penalties. must be between zero and one. alpha=0 is pure L2 penalty, alpha=1 is pure L1 penalty.
+    :param float thresh: convergence criterion for coordinate descent. coordinate descent runs until the bigest element-wise change in beta is less than thresh.
+    :param int max_iters: maximum number of update passes through all P elements of beta, in case thesh is never met.
+
+    .. note:: ``beta`` and ``residual`` are modified in-place.
     """
 
     N, D = X.shape

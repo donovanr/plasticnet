@@ -1,5 +1,5 @@
 plasticnet.utils.math
 =====================
-.. currentmodule:: plasticnet.plasticnet.plasticnet
-.. automodule:: plasticnet.utils.math
-    :members:
+.. currentmodule:: plasticnet.utils.math
+
+.. autofunction:: plasticnet.utils.math.soft_thresh

@@ -1,5 +1,5 @@
 plasticnet.plasticnet.plasticnet
 ================================
 .. currentmodule:: plasticnet.plasticnet.plasticnet
-.. automodule:: plasticnet.plasticnet.plasticnet
-    :members:
+
+.. autofunction:: plasticnet.plasticnet.plasticnet.solve_gpnet
