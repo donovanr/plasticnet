@@ -10,3 +10,4 @@ dependencies:
   - sphinx
   - pip:
     - pre-commit
+    - sphinx_rtd_theme
