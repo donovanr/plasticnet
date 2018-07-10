@@ -26,8 +26,8 @@ def solve_gpnet(
 
         ||y-X\cdot\beta||_2^2 + \alpha\cdot\lambda||\beta-\xi||_1 + (1-\alpha)\cdot\lambda||\beta-\zeta||_2^2
 
-    :param (ndarray) beta: shape (P,) initial guess for the solution to the regression. modified in-place.
-    :param ndarray residual: shape (N,) residual, i.e residual = y - X@beta. modified in-place.
+    :param ndarray beta: shape (P,) initial guess for the solution to the regression. modified in-place.
+    :param ndarray residual: shape (N,) residual, i.e :math:`r = y - X\beta`. modified in-place.
     :param ndarray X: shape (N,P) data matrix.
     :param ndarray xi: shape (P,) target for L1 penalty.
     :param ndarray zeta: shape (P,) target for L2 penalty.
