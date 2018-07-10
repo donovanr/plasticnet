@@ -1,0 +1,13 @@
+name: plasticnet
+channels:
+  - defaults
+dependencies:
+  - ipython
+  - numba
+  - numpy
+  - pip
+  - pytest
+  - sphinx
+  - pip:
+    - pre-commit
+

@@ -5,6 +5,15 @@
 Plastic Net is a generalization of the Elastic Net.
 
 ## Installation
+
+We use [Conda](https://conda.io/) to manage the development environment, with dependencies listed in [environment.yml](../master/environment.yml). To install them, install `conda` using the instructions on their site, and then use
+
+```
+conda env create -f environment.yml
+```
+
+Once the development environment is set up, install this package with
+
 ```
 git clone https://github.com/donovanr/plasticnet.git
 cd plasticnet
