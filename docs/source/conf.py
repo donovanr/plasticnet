@@ -32,7 +32,15 @@ sys.path.insert(0, os.path.abspath("../../"))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.mathjax", "sphinx.ext.viewcode"]
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
+]
+
+napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -170,3 +178,71 @@ texinfo_documents = [
         "Miscellaneous",
     )
 ]
+
+
+# -- Intersphinx Configuration --------------------------------------------
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/", None),
+    "numpy": ("http://docs.scipy.org/doc/numpy/", None),
+}
+
+# -- A patch that prevents Sphinx from cross-referencing ivar tags -------
+# See http://stackoverflow.com/a/41184353/3343043
+
+from docutils import nodes
+from sphinx.util.docfields import TypedField
+from sphinx import addnodes
+
+
+def patched_make_field(self, types, domain, items, **kw):
+    # `kw` catches `env=None` needed for newer sphinx while maintaining
+    #  backwards compatibility when passed along further down!
+
+    # type: (List, unicode, Tuple) -> nodes.field
+    def handle_item(fieldarg, content):
+        par = nodes.paragraph()
+        par += addnodes.literal_strong("", fieldarg)  # Patch: this line added
+        # par.extend(self.make_xrefs(self.rolename, domain, fieldarg,
+        #                           addnodes.literal_strong))
+        if fieldarg in types:
+            par += nodes.Text(" (")
+            # NOTE: using .pop() here to prevent a single type node to be
+            # inserted twice into the doctree, which leads to
+            # inconsistencies later when references are resolved
+            fieldtype = types.pop(fieldarg)
+            if len(fieldtype) == 1 and isinstance(fieldtype[0], nodes.Text):
+                typename = u"".join(n.astext() for n in fieldtype)
+                typename = typename.replace("int", "python:int")
+                typename = typename.replace("long", "python:long")
+                typename = typename.replace("float", "python:float")
+                typename = typename.replace("type", "python:type")
+                par.extend(
+                    self.make_xrefs(
+                        self.typerolename,
+                        domain,
+                        typename,
+                        addnodes.literal_emphasis,
+                        **kw
+                    )
+                )
+            else:
+                par += fieldtype
+            par += nodes.Text(")")
+        par += nodes.Text(" -- ")
+        par += content
+        return par
+
+    fieldname = nodes.field_name("", self.label)
+    if len(items) == 1 and self.can_collapse:
+        fieldarg, content = items[0]
+        bodynode = handle_item(fieldarg, content)
+    else:
+        bodynode = self.list_type()
+        for fieldarg, content in items:
+            bodynode += nodes.list_item("", handle_item(fieldarg, content))
+    fieldbody = nodes.field_body("", bodynode)
+    return nodes.field("", fieldname, fieldbody)
+
+
+TypedField.make_field = patched_make_field
