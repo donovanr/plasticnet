@@ -8,6 +8,6 @@ dependencies:
   - pip
   - pytest
   - sphinx
+  - sphinx_rtd_theme
   - pip:
     - pre-commit
-    - sphinx_rtd_theme

@@ -62,4 +62,4 @@ MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
 PACKAGE_DATA = {"plasticnet": [pjoin("data", "*")]}
-REQUIRES = ["numpy", "numba", "networkx"]
+REQUIRES = ["numpy", "numba"]

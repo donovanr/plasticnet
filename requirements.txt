@@ -1,4 +1,8 @@
-numpy
+ipython
 numba
-networkx
+numpy
+pip
 pytest
+sphinx
+sphinx_rtd_theme
+pre-commit
