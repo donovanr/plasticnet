@@ -4,13 +4,10 @@ import numpy.testing as npt
 from sklearn.preprocessing import scale
 from sklearn import linear_model
 
-
-def test_gpnet():
-    """General plastic net tests"""
-    npt.assert_almost_equal(np.array([0.0, 0.0]), np.array([0.0, 0.0]), decimal=1)
+from plasticnet.plasticnet.plasticnet import solve_ols
 
 
-def test_ols_regression():
+def test_ols_explicit():
     """General plastic net tests"""
 
     y = scale(np.array([3, 1, 4, 1], dtype=float))
@@ -19,6 +16,6 @@ def test_ols_regression():
     ols = linear_model.LinearRegression()
     ols.fit(X, y)
 
-    npt.assert_almost_equal(
-        ols.coef_, np.array([-0.69631062, 0.34417626, 0.38806814]), decimal=8
-    )
+    beta = solve_ols(X, y, thresh=1e-8, max_iters=1000)
+
+    npt.assert_almost_equal(ols.coef_, beta, decimal=8)

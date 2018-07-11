@@ -65,3 +65,42 @@ def solve_gpnet(
             delta_b[j] = b_new - beta[j]
             residual -= X[:, j] * delta_b[j]
             beta[j] = b_new
+
+
+@jit(nopython=True, nogil=True, cache=False)
+def solve_ols(X, y, thresh=1e-8, max_iters=100):
+    r"""
+    solve_ols(X, y, thresh=1e-8, max_iters=100)
+
+    Ordinary least squares regression.  This function finds the beta that minimizes
+
+    .. math::
+
+        ||\vec{y}-X\cdot\vec{\beta}||_2^2
+
+    Args:
+        X (numpy.ndarray): shape (N,D) data matrix.
+        y (numpy.ndarray): shape (N,) target vector.
+        thresh (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **thresh**.
+        max_iters (int): maximum number of update passes through all P elements of **beta**, in case **thresh** is never met.
+
+    Returns:
+        (numpy.ndarray): shape (D,) coefficient vector.
+    """
+
+    N, D = X.shape
+    beta = np.zeros(D, dtype=np.float64)
+    r = y.copy()
+    rho = np.ones(D, dtype=np.float64) + thresh
+
+    iter_num = 0
+
+    while np.max(rho) > thresh and iter_num < max_iters:
+        iter_num += 1
+        for j in range(D):
+            # for j in np.random.permutation(D):
+            rho[j] = np.dot(X[:, j], r) / N
+            r -= rho[j] * X[:, j]
+            beta[j] += rho[j]
+
+    return beta
