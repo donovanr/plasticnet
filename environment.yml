@@ -1,13 +1,14 @@
 name: plasticnet
 channels:
-  - defaults
+  - conda-forge
 dependencies:
+  - python=3
   - ipython
   - numba
   - numpy
   - pip
   - pytest
+  - scikit-learn
   - sphinx
   - sphinx_rtd_theme
-  - pip:
-    - pre-commit
+  - pre_commit
