@@ -51,7 +51,7 @@ def solve_enet(X, y, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2N} ||\vec{\beta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
 
     Args:
         X (numpy.ndarray): shape (N,D) data matrix.
@@ -107,7 +107,7 @@ def solve_gpnet(
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2N} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
