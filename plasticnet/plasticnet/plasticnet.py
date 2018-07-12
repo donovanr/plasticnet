@@ -23,7 +23,7 @@ def solve_gpnet(
 
     .. math::
 
-        ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha)||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        (1/2N)||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha)||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -76,7 +76,7 @@ def solve_ols(X, y, thresh=1e-8, max_iters=100):
 
     .. math::
 
-        ||\vec{y}-X\cdot\vec{\beta}||_2^2
+        (1/2N)||\vec{y}-X\cdot\vec{\beta}||_2^2
 
     Args:
         X (numpy.ndarray): shape (N,D) data matrix.
