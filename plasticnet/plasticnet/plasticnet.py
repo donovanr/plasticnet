@@ -23,7 +23,7 @@ def solve_gpnet(
 
     .. math::
 
-        (1/2N)||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha)||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha)||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -76,7 +76,7 @@ def solve_ols(X, y, thresh=1e-8, max_iters=100):
 
     .. math::
 
-        (1/2N)||\vec{y}-X\cdot\vec{\beta}||_2^2
+        \tfrac{1}{2N}||\vec{y}-X\cdot\vec{\beta}||_2^2
 
     Args:
         X (numpy.ndarray): shape (N,D) data matrix.
@@ -97,8 +97,7 @@ def solve_ols(X, y, thresh=1e-8, max_iters=100):
 
     while np.max(rho) > thresh and iter_num < max_iters:
         iter_num += 1
-        for j in range(D):
-            # for j in np.random.permutation(D):
+        for j in np.random.permutation(D):
             rho[j] = np.dot(X[:, j], r) / N
             r -= rho[j] * X[:, j]
             beta[j] += rho[j]
