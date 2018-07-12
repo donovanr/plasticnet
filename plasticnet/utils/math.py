@@ -30,4 +30,7 @@ def soft_thresh(lam, x):
     Returns:
         numpy.ndarray: soft thresholded array of floats
     """
-    return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
+    if lam == 0.0:
+        return x
+    else:
+        return np.sign(x) * np.maximum(np.abs(x) - lam, 0)
