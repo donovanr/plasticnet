@@ -4,7 +4,7 @@ from sklearn import linear_model
 from sklearn.preprocessing import scale
 from sklearn.datasets import make_regression
 
-from plasticnet.plasticnet.plasticnet import solve_ols, solve_enet
+from plasticnet.plasticnet.plasticnet import solve_ols, solve_enet, solve_gpnet
 
 
 def test_ols_explicit(N=200, D=100):
@@ -60,3 +60,26 @@ def test_enet_explicit(N=200, D=100):
     )
 
     np.testing.assert_almost_equal(enet.coef_, beta, decimal=6)
+
+
+def test_ols_general(N=200, D=100):
+    """Test OLS (lambda=0 in solve_gpnet) against sklearn LinearRegression"""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = 0.0
+    alpha = 0.0
+    xi = np.zeros(D, dtype=np.float64)
+    zeta = np.zeros(D, dtype=np.float64)
+
+    ols = linear_model.LinearRegression()
+    ols.fit(X, y)
+
+    beta = solve_gpnet(
+        X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
+    )
+
+    np.testing.assert_almost_equal(ols.coef_, beta, decimal=6)

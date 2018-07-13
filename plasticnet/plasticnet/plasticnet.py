@@ -5,9 +5,9 @@ from ..utils import math
 
 
 @jit(nopython=True, nogil=True, cache=False)
-def _solve_ols_inplace(beta, r, X, tol=1e-8, max_iter=100):
+def _solve_ols_inplace(beta, r, X, tol=1e-8, max_iter=1e3):
     r"""
-    _solve_ols_inplace(beta, r, X, tol=1e-8, max_iter=100)
+    _solve_ols_inplace(beta, r, X, tol=1e-8, max_iter=1e3)
 
     Ordinary least squares regression.  This function finds the beta that minimizes
 
@@ -41,9 +41,9 @@ def _solve_ols_inplace(beta, r, X, tol=1e-8, max_iter=100):
 
 
 @jit(nopython=True, nogil=True, cache=False)
-def solve_ols(X, y, tol=1e-8, max_iter=100):
+def solve_ols(X, y, tol=1e-8, max_iter=1e3):
     r"""
-    solve_ols(X, y, tol=1e-8, max_iter=100)
+    solve_ols(X, y, tol=1e-8, max_iter=1e3)
 
     Ordinary least squares regression.  This function finds the beta that minimizes
 
@@ -72,10 +72,10 @@ def solve_ols(X, y, tol=1e-8, max_iter=100):
 
 @jit(nopython=True, nogil=True, cache=True)
 def _solve_enet_inplace(
-    beta, r, X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100
+    beta, r, X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3
 ):
     r"""
-    _solve_enet_inplace(beta, r, X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100)
+    _solve_enet_inplace(beta, r, X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
     Elastic net regression.  This function finds the beta that minimizes
 
@@ -110,10 +110,8 @@ def _solve_enet_inplace(
     while np.max(delta_beta) > tol and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
-            rho[j] = np.dot(X[:, j], r)
-            beta[j] = math.soft_thresh(lambda1, beta_old[j] + rho[j] / N) / (
-                1 + lambda2
-            )
+            rho[j] = np.dot(X[:, j], r) / N
+            beta[j] = math.soft_thresh(lambda1, beta_old[j] + rho[j]) / (1 + lambda2)
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
@@ -122,9 +120,9 @@ def _solve_enet_inplace(
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def solve_enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100):
+def solve_enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    solve_enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100)
+    solve_enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
     Elastic net regression.  This function finds the beta that minimizes
 
@@ -164,10 +162,10 @@ def solve_enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100):
 
 @jit(nopython=True, nogil=True, cache=True)
 def _solve_gpnet_inplace(
-    beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100
+    beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3
 ):
     r"""
-    _solve_gpnet_inplace(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100)
+    _solve_gpnet_inplace(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
     General plastic net regression.  This function finds the beta that minimizes
 
@@ -203,14 +201,11 @@ def _solve_gpnet_inplace(
     while np.max(delta_beta) > tol and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
-            rho[j] = np.dot(X[:, j], r)
+            rho[j] = np.dot(X[:, j], r) / N
             beta[j] = (
                 math.soft_thresh(
                     lambda1,
-                    beta_old[j]
-                    + rho[j] / N
-                    + lambda2 * zeta[j]
-                    - (1 + lambda2) * xi[j],
+                    beta_old[j] + rho[j] + lambda2 * zeta[j] - (1 + lambda2) * xi[j],
                 )
                 / (1 + lambda2)
                 + xi[j]
@@ -223,9 +218,9 @@ def _solve_gpnet_inplace(
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def solve_gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100):
+def solve_gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    solve_gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=100)
+    solve_gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
     General plastic net regression.  This function finds the beta that minimizes
 
