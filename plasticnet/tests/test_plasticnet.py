@@ -83,3 +83,28 @@ def test_ols_general(N=200, D=100):
     )
 
     np.testing.assert_almost_equal(ols.coef_, beta, decimal=6)
+
+
+def test_enet_general(N=200, D=100):
+    """Test elastic net (xi=0 & zeta=0 in solve_gpnet) against sklearn ElasticNet"""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    alpha = np.random.rand()
+    xi = np.zeros(D, dtype=np.float64)
+    zeta = np.zeros(D, dtype=np.float64)
+
+    enet = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1e3
+    )
+    enet.fit(X, y)
+
+    beta = solve_gpnet(
+        X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
+    )
+
+    np.testing.assert_almost_equal(enet.coef_, beta, decimal=6)
