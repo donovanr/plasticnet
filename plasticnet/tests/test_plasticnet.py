@@ -18,7 +18,7 @@ def test_ols_explicit(N=200, D=100):
     ols = linear_model.LinearRegression()
     ols.fit(X, y)
 
-    beta = solve_ols(X, y, thresh=1e-8, max_iters=1e3)
+    beta = solve_ols(X, y, tol=1e-8, max_iter=1e3)
 
     npt.assert_almost_equal(ols.coef_, beta, decimal=6)
 
@@ -34,7 +34,7 @@ def test_enet_ols(N=200, D=100):
     ols = linear_model.LinearRegression()
     ols.fit(X, y)
 
-    beta = solve_enet(X, y, lambda_total=0.0, alpha=0.0, thresh=1e-8, max_iters=1e3)
+    beta = solve_enet(X, y, lambda_total=0.0, alpha=0.0, tol=1e-8, max_iter=1e3)
 
     npt.assert_almost_equal(ols.coef_, beta, decimal=6)
 
@@ -50,6 +50,6 @@ def test_enet_sklearn(N=200, D=100):
     enet = linear_model.ElasticNet(alpha=0.5, l1_ratio=0.5, tol=1e-8, max_iter=1e3)
     enet.fit(X, y)
 
-    beta = solve_enet(X, y, lambda_total=0.5, alpha=0.5, thresh=1e-8, max_iters=1e3)
+    beta = solve_enet(X, y, lambda_total=0.5, alpha=0.5, tol=1e-8, max_iter=1e3)
 
     npt.assert_almost_equal(enet.coef_, beta, decimal=6)
