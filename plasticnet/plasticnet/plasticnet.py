@@ -190,31 +190,36 @@ def _solve_gpnet_inplace(
         **beta** and **r** are modified in-place.
     """
 
-    N, D = X.shape
-
     lambda1 = alpha * lambda_total
     lambda2 = (1.0 - alpha) * lambda_total
 
-    delta_b = np.ones_like(beta) * tol + 1
+    N, D = X.shape
+    beta_old = beta.copy()
+    delta_beta = np.ones(D, dtype=np.float64) + tol
+    rho = np.ones(D, dtype=np.float64) + tol
+
     iter_num = 0
 
-    while np.max(delta_b) > tol and iter_num < max_iter:
+    while np.max(delta_beta) > tol and iter_num < max_iter:
         iter_num += 1
-        for j in np.random.permutation(D):
-            b_new = (
+        for j in range(D):
+            rho[j] = np.dot(X[:, j], r)
+            beta[j] = (
                 math.soft_thresh(
                     lambda1,
-                    np.dot(X[:, j], r) / N
+                    beta_old[j]
+                    + rho[j] / N
                     + lambda2 * zeta[j]
-                    - (1 + lambda2) * xi[j]
-                    + beta[j],
+                    - (1 + lambda2) * xi[j],
                 )
-                / (1.0 + lambda2)
+                / (1 + lambda2)
                 + xi[j]
             )
-            delta_b[j] = b_new - beta[j]
-            r -= X[:, j] * delta_b[j]
-            beta[j] = b_new
+            delta_beta[j] = beta[j] - beta_old[j]
+            r -= X[:, j] * delta_beta[j]
+            beta_old[j] = beta[j]
+
+    return beta
 
 
 @jit(nopython=True, nogil=True, cache=True)
