@@ -24,7 +24,7 @@ def _solve_ols_inplace(beta, r, X, thresh=1e-8, max_iters=100):
         max_iters (int): maximum number of update passes through all P elements of **beta**, in case **thresh** is never met.
 
     Note
-        **beta** and **residual** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge tot he correct answer.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.
     """
 
     N, D = X.shape
@@ -94,7 +94,7 @@ def _solve_enet_inplace(
         max_iters (int): maximum number of update passes through all P elements of **beta**, in case **thresh** is never met.
 
     Note
-        **beta** and **residual** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge tot he correct answer.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.
     """
 
     lambda1 = alpha * lambda_total
@@ -139,6 +139,9 @@ def solve_enet(X, y, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. :math:`\alpha=0` is pure L2 penalty, :math:`\alpha=1` is pure L1 penalty.
         thresh (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **thresh**.
         max_iters (int): maximum number of update passes through all P elements of **beta**, in case **thresh** is never met.
+
+    Returns:
+        (numpy.ndarray): shape (D,) coefficient vector.
     """
 
     N, D = X.shape
