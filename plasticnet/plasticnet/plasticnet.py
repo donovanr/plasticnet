@@ -24,7 +24,7 @@ def _solve_ols_inplace(beta, r, X, tol=1e-8, max_iter=1e3):
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -94,7 +94,7 @@ def _solve_enet_inplace(
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     lambda1 = alpha * lambda_total
@@ -185,7 +185,7 @@ def _solve_gpnet_inplace(
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     lambda1 = alpha * lambda_total
@@ -237,6 +237,9 @@ def solve_gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter
         alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. :math:`\alpha=0` is pure L2 penalty, :math:`\alpha=1` is pure L1 penalty.
         tol (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **tol**.
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
+
+    Returns:
+        (numpy.ndarray): shape (D,) coefficient vector.
     """
 
     N, D = X.shape

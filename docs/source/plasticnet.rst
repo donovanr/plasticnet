@@ -9,6 +9,8 @@ User-friendly Functions
 
 .. autofunction:: plasticnet.plasticnet.plasticnet.solve_enet
 
+.. autofunction:: plasticnet.plasticnet.plasticnet.solve_gpnet
+
 
 In-place Functions
 ------------------
@@ -17,4 +19,4 @@ In-place Functions
 
 .. autofunction:: plasticnet.plasticnet.plasticnet._solve_enet_inplace
 
-.. autofunction:: plasticnet.plasticnet.plasticnet.solve_gpnet
+.. autofunction:: plasticnet.plasticnet.plasticnet._solve_gpnet_inplace
