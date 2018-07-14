@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 from numba import jitclass, float32, int64
 
-from .plasticnet import solve_gpnet
+from .non_in_place import gpnet
 
 # jit class spec
 spec = [
@@ -35,7 +35,7 @@ class TimePoint(object):
     def solve_OLS(self, thresh=1e-8, max_iters=100):
         """OLS regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zero,
@@ -50,7 +50,7 @@ class TimePoint(object):
     def solve_ridge(self, lambda_total=1.0, thresh=1e-8, max_iters=100):
         """Ridge regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + lambda||beta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zero,
@@ -65,7 +65,7 @@ class TimePoint(object):
     def solve_lasso(self, lambda_total=1.0, thresh=1e-8, max_iters=100):
         """Lasso regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zero,
@@ -80,7 +80,7 @@ class TimePoint(object):
     def solve_enet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Elastic net regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + alpha*lambda||beta||_1 + (1-alpha)*lambda||beta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zero,
@@ -95,7 +95,7 @@ class TimePoint(object):
     def solve_pridge(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Plastic ridge regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + lambda||beta-zeta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zero,
@@ -110,7 +110,7 @@ class TimePoint(object):
     def solve_plasso(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Plastic Lasso regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + lambda||beta-xi||_1"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zero,
@@ -125,7 +125,7 @@ class TimePoint(object):
     def solve_hpnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Hard plastic net regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + lambda||beta-xi||_1 + (1-alpha)*lambda||beta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.xi,
             self.zero,
@@ -140,7 +140,7 @@ class TimePoint(object):
     def solve_spnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Soft plastic net regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + alpha*lambda||beta||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.zero,
             self.zeta,
@@ -155,7 +155,7 @@ class TimePoint(object):
     def solve_upnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Unified plastic net regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-xi||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.xi,
             self.xi,
@@ -167,10 +167,10 @@ class TimePoint(object):
             max_iters=max_iters,
         )
 
-    def solve_gpnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
+    def gpnet(self, lambda_total=1.0, alpha=0.75, thresh=1e-8, max_iters=100):
         """Hard plastic net regression.  This function finds the beta that minimizes
         ||y-X@beta||_2^2 + alpha*lambda||beta-xi||_1 + (1-alpha)*lambda||beta-zeta||_2^2"""
-        solve_gpnet(
+        gpnet(
             self.X,
             self.xi,
             self.zeta,

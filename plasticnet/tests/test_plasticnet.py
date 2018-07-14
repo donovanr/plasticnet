@@ -4,7 +4,7 @@ from sklearn import linear_model
 from sklearn.preprocessing import scale
 from sklearn.datasets import make_regression
 
-from plasticnet.plasticnet.plasticnet import solve_ols, solve_enet, solve_gpnet
+from plasticnet.solvers.non_in_place import ols, enet, gpnet
 
 
 def test_ols_explicit(N=200, D=100):
@@ -15,12 +15,12 @@ def test_ols_explicit(N=200, D=100):
     )
     X, y = scale(X), scale(y)
 
-    ols = linear_model.LinearRegression()
-    ols.fit(X, y)
+    lm = linear_model.LinearRegression()
+    lm.fit(X, y)
 
-    beta = solve_ols(X, y, tol=1e-8, max_iter=1e3)
+    beta = ols(X, y, tol=1e-8, max_iter=1e3)
 
-    np.testing.assert_almost_equal(ols.coef_, beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
 
 
 def test_enet_explicit_ols(N=200, D=100):
@@ -31,12 +31,12 @@ def test_enet_explicit_ols(N=200, D=100):
     )
     X, y = scale(X), scale(y)
 
-    ols = linear_model.LinearRegression()
-    ols.fit(X, y)
+    lm = linear_model.LinearRegression()
+    lm.fit(X, y)
 
-    beta = solve_enet(X, y, lambda_total=0.0, alpha=0.0, tol=1e-8, max_iter=1e3)
+    beta = enet(X, y, lambda_total=0.0, alpha=0.0, tol=1e-8, max_iter=1e3)
 
-    np.testing.assert_almost_equal(ols.coef_, beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
 
 
 def test_enet_explicit(N=200, D=100):
@@ -50,16 +50,14 @@ def test_enet_explicit(N=200, D=100):
     lambda_total = np.random.exponential()
     alpha = np.random.rand()
 
-    enet = linear_model.ElasticNet(
+    enet_lm = linear_model.ElasticNet(
         alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1e3
     )
-    enet.fit(X, y)
+    enet_lm.fit(X, y)
 
-    beta = solve_enet(
-        X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
-    )
+    beta = enet(X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3)
 
-    np.testing.assert_almost_equal(enet.coef_, beta, decimal=6)
+    np.testing.assert_almost_equal(enet_lm.coef_, beta, decimal=6)
 
 
 def test_ols_general(N=200, D=100):
@@ -75,14 +73,14 @@ def test_ols_general(N=200, D=100):
     xi = np.zeros(D, dtype=np.float64)
     zeta = np.zeros(D, dtype=np.float64)
 
-    ols = linear_model.LinearRegression()
-    ols.fit(X, y)
+    lm = linear_model.LinearRegression()
+    lm.fit(X, y)
 
-    beta = solve_gpnet(
+    beta = gpnet(
         X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
     )
 
-    np.testing.assert_almost_equal(ols.coef_, beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
 
 
 def test_enet_general(N=200, D=100):
@@ -98,13 +96,13 @@ def test_enet_general(N=200, D=100):
     xi = np.zeros(D, dtype=np.float64)
     zeta = np.zeros(D, dtype=np.float64)
 
-    enet = linear_model.ElasticNet(
+    lm = linear_model.ElasticNet(
         alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1e3
     )
-    enet.fit(X, y)
+    lm.fit(X, y)
 
-    beta = solve_gpnet(
+    beta = gpnet(
         X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
     )
 
-    np.testing.assert_almost_equal(enet.coef_, beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
