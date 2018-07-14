@@ -28,7 +28,7 @@ The Travis configuration is in [.travis.yml](../master/.travis.yml), and doesn't
 Tests are run automatically when commits are pushed to GitHub. To run the tests locally, issue `pytest` in the main project directory.
 
 ### Read the Docs
-Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http://www.sphinx-doc.org/en/master/usage/quickstart.html#autodoc) lives in [docs/source/conf.py](../master/docs/source/conf.py).  To get things to build with Read the Docs, you need to set up a virtual environment in the admin options there so that dependencies like `numpy` can be installed, and point Read the Docs to the `requirements.txt` file.  You should also choose the `CPython 3.x` interpreter.
+Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http://www.sphinx-doc.org/en/master/usage/quickstart.html#autodoc) lives in [docs/source/conf.py](../master/docs/source/conf.py).  To get things to build with Read the Docs, you need to set up a virtual environment in the admin options there so that dependencies like `numpy` can be installed, and point Read the Docs to the `docs/source/rtd-requirements.txt` file.  You should also choose the `CPython 3.x` interpreter.
 
 Docs are generated automatically when commits are pushed to GitHub.  To generate the docs locally, from the main project directory, use
 
