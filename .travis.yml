@@ -13,4 +13,4 @@ install:
   - source activate plasticnet
   - pip install -e .
 script:
-  - pytest
+  - pytest -v
