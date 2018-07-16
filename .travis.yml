@@ -1,16 +1,35 @@
 language: python
+
 python:
   - '3.6'
-install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-  - bash miniconda.sh -b -p $HOME/miniconda
+
+cache:
+  directories:
+    - $HOME/miniconda
+
+before_cache:
+  - rm -rf $HOME/miniconda/envs/plasticnet
+
+before_install:
+  - |
+    URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+    echo ""
+    if [ ! -f $HOME/miniconda/bin/conda ] ; then
+      echo "Fresh miniconda installation."
+      wget $URL -O miniconda.sh
+      rm -rf $HOME/miniconda
+      bash miniconda.sh -b -p $HOME/miniconda
+    fi
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
+  - conda update --all
   - conda info -a
   - conda env create -f .environment.yml
   - source activate plasticnet
+
+install:
   - pip install -e .
+
 script:
   - pytest -v
