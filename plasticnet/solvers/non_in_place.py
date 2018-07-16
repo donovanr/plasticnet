@@ -13,7 +13,7 @@ def ols(X, y, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N}||\vec{y}-X\cdot\vec{\beta}||_2^2
+        \tfrac{1}{2N}||\vec{y}-X\vec{\beta}||_2^2
 
     Args:
         X (numpy.ndarray): shape (N,D) data matrix.
@@ -43,7 +43,7 @@ def enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
 
     Args:
         X (numpy.ndarray): shape (N,D) data matrix.
@@ -77,7 +77,7 @@ def gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         X (numpy.ndarray): shape (N,P) data matrix.
@@ -121,7 +121,7 @@ def pridge(X, y, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2
 
     Args:
         X (numpy.ndarray): shape (N,P) data matrix.
@@ -153,7 +153,7 @@ def plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda ||\vec{\beta}-\vec{\xi}||_1
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda ||\vec{\beta}-\vec{\xi}||_1
 
     Args:
         X (numpy.ndarray): shape (N,P) data matrix.
@@ -185,7 +185,7 @@ def hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
 
     Args:
         X (numpy.ndarray): shape (N,P) data matrix.
@@ -227,7 +227,7 @@ def spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         X (numpy.ndarray): shape (N,P) data matrix.
@@ -268,7 +268,7 @@ def upnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\xi}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\xi}||_2^2 \bigr)
 
     Args:
         X (numpy.ndarray): shape (N,P) data matrix.

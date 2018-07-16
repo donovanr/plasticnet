@@ -13,7 +13,7 @@ def ols_(beta, r, X, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N}||\vec{y}-X\cdot\vec{\beta}||_2^2
+        \tfrac{1}{2N}||\vec{y}-X\vec{\beta}||_2^2
 
     Args:
         beta (numpy.ndarray): shape (D,) coefficient vector. modified in-place.
@@ -48,7 +48,7 @@ def enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (D,) coefficient vector. modified in-place.
@@ -92,7 +92,7 @@ def gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_ite
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -145,7 +145,7 @@ def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -184,7 +184,7 @@ def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3):
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda ||\vec{\beta}-\vec{\xi}||_1
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda ||\vec{\beta}-\vec{\xi}||_1
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -223,7 +223,7 @@ def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -263,7 +263,7 @@ def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\zeta}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
@@ -303,7 +303,7 @@ def upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
     .. math::
 
-        \tfrac{1}{2N} ||\vec{y}-X\cdot\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\xi}||_2^2 \bigr)
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \bigl( \alpha||\vec{\beta}-\vec{\xi}||_1 + (1-\alpha) \tfrac{1}{2} ||\vec{\beta}-\vec{\xi}||_2^2 \bigr)
 
     Args:
         beta (numpy.ndarray): shape (P,) initial guess for the solution to the regression. modified in-place.
