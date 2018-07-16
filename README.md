@@ -4,13 +4,13 @@
 
 ## Installation
 
-We use [Conda](https://conda.io/) to manage the development environment, with dependencies listed in [environment.yml](../master/environment.yml).
+We use [Conda](https://conda.io/) to manage the development environment, with dependencies listed in [.environment.yml](../master/.environment.yml).
 If you don't have `conda` installed and set up for Python 3.x, install it using the instructions on their site, and then install this package with
 
 ```
 git clone https://github.com/donovanr/plasticnet.git
 cd plasticnet
-conda env create -f environment.yml
+conda env create -f .environment.yml
 conda activate plasticnet
 pip install -e .
 ```
