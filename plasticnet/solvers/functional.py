@@ -1,14 +1,10 @@
 import numpy as np
-from numba import jit
 
 from .in_place import enet_, gpnet_, hpnet_, ols_, plasso_, pridge_, spnet_, upnet_
 
 
-@jit(nopython=True, nogil=True, cache=False)
 def ols(X, y, tol=1e-8, max_iter=1e3):
     r"""
-    ols(X, y, tol=1e-8, max_iter=1e3)
-
     Ordinary least squares regression.  This function finds the beta that minimizes
 
     .. math::
@@ -34,11 +30,8 @@ def ols(X, y, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
-
     Elastic net regression.  This function finds the beta that minimizes
 
     .. math::
@@ -68,11 +61,8 @@ def enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
-
     General plastic net regression.  This function finds the beta that minimizes
 
     .. math::
@@ -112,11 +102,8 @@ def gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def pridge(X, y, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3):
     r"""
-    pridge(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
-
     Plastic ridge regression.  This function finds the beta that minimizes
 
     .. math::
@@ -144,11 +131,8 @@ def pridge(X, y, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3):
     r"""
-    plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3)
-
     Plastic lasso regression.  This function finds the beta that minimizes
 
     .. math::
@@ -176,11 +160,8 @@ def plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
-
     Hard plastic net regression.  This function finds the beta that minimizes
 
     .. math::
@@ -218,11 +199,8 @@ def hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
-
     Soft plastic net regression.  This function finds the beta that minimizes
 
     .. math::
@@ -259,11 +237,8 @@ def spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     return beta
 
 
-@jit(nopython=True, nogil=True, cache=True)
 def upnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
     r"""
-    upnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
-
     Unified plastic net regression.  This function finds the beta that minimizes
 
     .. math::

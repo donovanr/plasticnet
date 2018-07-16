@@ -4,7 +4,7 @@ from sklearn import linear_model
 from sklearn.preprocessing import scale
 from sklearn.datasets import make_regression
 
-from plasticnet.solvers.non_in_place import ols, enet, gpnet
+from plasticnet.solvers.functional import ols, enet, gpnet
 
 
 def test_ols_explicit(N=200, D=100):
