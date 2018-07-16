@@ -1,4 +1,4 @@
-plasticnet.plasticnet.plasticnet
+Plastic Net
 ================================
 .. currentmodule:: plasticnet.plasticnet.plasticnet
 
