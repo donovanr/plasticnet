@@ -1,6 +1,14 @@
 Plastic Net
-================================
-.. currentmodule:: plasticnet.plasticnet.plasticnet
+===========
+.. currentmodule:: plasticnet.sp;vers
+
+
+Classes
+-------
+
+.. autoclass:: plasticnet.solvers.classes.Ols
+
+.. autoclass:: plasticnet.solvers.classes.Enet
 
 User-friendly Functions
 -----------------------
