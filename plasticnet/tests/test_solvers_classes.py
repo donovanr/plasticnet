@@ -4,7 +4,7 @@ from sklearn import linear_model
 from sklearn.preprocessing import scale
 from sklearn.datasets import make_regression
 
-from plasticnet.solvers.classes import Ols, Enet
+from plasticnet.solvers.classes import Regression
 
 
 def test_ols_explicit(N=200, D=100):
@@ -18,8 +18,8 @@ def test_ols_explicit(N=200, D=100):
     lm_sklearn = linear_model.LinearRegression()
     lm_sklearn.fit(X, y)
 
-    lm_pnet = Ols(X, y, tol=1e-8, max_iter=1000)
-    lm_pnet.fit()
+    lm_pnet = Regression(X, y)
+    lm_pnet.fit_ols(tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
 
@@ -40,9 +40,7 @@ def test_enet_explicit(N=200, D=100):
     )
     lm_sklearn.fit(X, y)
 
-    lm_pnet = Enet(
-        X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
-    )
-    lm_pnet.fit()
+    lm_pnet = Regression(X, y)
+    lm_pnet.fit_enet(lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
