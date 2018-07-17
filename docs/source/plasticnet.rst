@@ -6,9 +6,9 @@ Plastic Net
 Classes
 -------
 
-.. autoclass:: plasticnet.solvers.classes.Ols
+.. autoclass:: plasticnet.solvers.classes.Regression
+   :members: 
 
-.. autoclass:: plasticnet.solvers.classes.Enet
 
 User-friendly Functions
 -----------------------
