@@ -18,7 +18,7 @@ def test_ols_explicit(N=200, D=100):
     lm = linear_model.LinearRegression()
     lm.fit(X, y)
 
-    beta = ols(X, y, tol=1e-8, max_iter=1e3)
+    beta = ols(X, y, tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
 
@@ -34,7 +34,7 @@ def test_enet_explicit_ols(N=200, D=100):
     lm = linear_model.LinearRegression()
     lm.fit(X, y)
 
-    beta = enet(X, y, lambda_total=0.0, alpha=0.0, tol=1e-8, max_iter=1e3)
+    beta = enet(X, y, lambda_total=0.0, alpha=0.0, tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
 
@@ -51,11 +51,11 @@ def test_enet_explicit(N=200, D=100):
     alpha = np.random.rand()
 
     enet_lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1e3
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
     )
     enet_lm.fit(X, y)
 
-    beta = enet(X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3)
+    beta = enet(X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(enet_lm.coef_, beta, decimal=6)
 
@@ -77,7 +77,7 @@ def test_ols_general(N=200, D=100):
     lm.fit(X, y)
 
     beta = gpnet(
-        X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
+        X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
@@ -97,12 +97,12 @@ def test_enet_general(N=200, D=100):
     zeta = np.zeros(D, dtype=np.float64)
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1e3
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
     )
     lm.fit(X, y)
 
     beta = gpnet(
-        X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3
+        X, y, xi, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)

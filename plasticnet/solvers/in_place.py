@@ -5,9 +5,9 @@ from ..utils import math
 
 
 @jit(nopython=True, nogil=True, cache=False)
-def ols_(beta, r, X, tol=1e-8, max_iter=1e3):
+def ols_(beta, r, X, tol=1e-8, max_iter=1000):
     r"""
-    ols_(beta, r, X, tol=1e-8, max_iter=1e3)
+    ols_(beta, r, X, tol=1e-8, max_iter=1000)
 
     Ordinary least squares regression.  This function finds the beta that minimizes
 
@@ -40,9 +40,9 @@ def ols_(beta, r, X, tol=1e-8, max_iter=1e3):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
+def enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    enet_(beta, r, X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
+    enet_(beta, r, X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Elastic net regression.  This function finds the beta that minimizes
 
@@ -84,9 +84,9 @@ def enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
+def gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
+    gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     General plastic net regression.  This function finds the beta that minimizes
 
@@ -137,9 +137,9 @@ def gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_ite
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3):
+def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
-    pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3)
+    pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000)
 
     Plastic ridge regression.  This function finds the beta that minimizes
 
@@ -176,9 +176,9 @@ def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1e3):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3):
+def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
-    plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3)
+    plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000)
 
     Plastic lasso regression.  This function finds the beta that minimizes
 
@@ -215,9 +215,9 @@ def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1e3):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
+def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
+    hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Hard plastic net regression.  This function finds the beta that minimizes
 
@@ -255,9 +255,9 @@ def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
+def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
+    spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Soft plastic net regression.  This function finds the beta that minimizes
 
@@ -295,9 +295,9 @@ def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
+def upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3)
+    upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Unified plastic net regression.  This function finds the beta that minimizes
 

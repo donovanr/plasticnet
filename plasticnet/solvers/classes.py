@@ -39,11 +39,11 @@ class Regression:
         self.beta = beta
         self._r = self.y - np.dot(self.X, self.beta)
 
-    def fit_ols(self, tol=1e-8, max_iter=1e3):
+    def fit_ols(self, tol=1e-8, max_iter=1000):
         r"""In-place ordinary least squares.  See :meth:`plasticnet.solvers.in_place.ols_` for documentation."""
         ols_(self.beta, self._r, self.X, tol=tol, max_iter=max_iter)
 
-    def fit_enet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1e3):
+    def fit_enet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place elastic net.  See :meth:`plasticnet.solvers.in_place.enet_` for documentation."""
         enet_(
             self.beta,

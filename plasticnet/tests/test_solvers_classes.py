@@ -18,7 +18,7 @@ def test_ols_explicit(N=200, D=100):
     lm_sklearn = linear_model.LinearRegression()
     lm_sklearn.fit(X, y)
 
-    lm_pnet = Ols(X, y, tol=1e-8, max_iter=1e3)
+    lm_pnet = Ols(X, y, tol=1e-8, max_iter=1000)
     lm_pnet.fit()
 
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
@@ -36,11 +36,13 @@ def test_enet_explicit(N=200, D=100):
     alpha = np.random.rand()
 
     lm_sklearn = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1e3
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
     )
     lm_sklearn.fit(X, y)
 
-    lm_pnet = Enet(X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1e3)
+    lm_pnet = Enet(
+        X, y, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+    )
     lm_pnet.fit()
 
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
