@@ -1,13 +1,13 @@
 Plastic Net
 ===========
-.. currentmodule:: plasticnet.sp;vers
+.. currentmodule:: plasticnet.solvers
 
 
 Classes
 -------
 
 .. autoclass:: plasticnet.solvers.classes.Regression
-   :members: 
+   :members:
 
 
 User-friendly Functions

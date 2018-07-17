@@ -1,11 +1,22 @@
 import numpy as np
 
-from .in_place import enet_, gpnet_, hpnet_, ols_, plasso_, pridge_, spnet_, upnet_
+from .in_place import (
+    enet_,
+    gpnet_,
+    hpnet_,
+    lasso_,
+    ols_,
+    plasso_,
+    pridge_,
+    ridge_,
+    spnet_,
+    upnet_,
+)
 
 
 def ols(X, y, tol=1e-8, max_iter=1000):
     r"""
-    Ordinary least squares regression.  This function finds the beta that minimizes
+    Ordinary least squares regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -30,9 +41,67 @@ def ols(X, y, tol=1e-8, max_iter=1000):
     return beta
 
 
+def ridge(X, y, lambda_total=1.0, tol=1e-8, max_iter=1000):
+    r"""
+    Ridge regression.  This function finds the :math:`\vec{\beta}` that minimizes
+
+    .. math::
+
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda \tfrac{1}{2} ||\vec{\beta}||_2^2
+
+    Args:
+        X (numpy.ndarray): shape (N,D) data matrix.
+        y (numpy.ndarray): shape (N,) target vector.
+        lambda_total (float): must be non-negative. total regularization penalty strength.
+        alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. :math:`\alpha=0` is pure L2 penalty, :math:`\alpha=1` is pure L1 penalty.
+        tol (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **tol**.
+        max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
+
+    Returns:
+        (numpy.ndarray): shape (D,) coefficient vector.
+    """
+
+    N, D = X.shape
+    beta = np.zeros(D, dtype=np.float64)
+    r = y - np.dot(X, beta)
+
+    ridge_(beta, r, X, lambda_total=lambda_total, tol=tol, max_iter=max_iter)
+
+    return beta
+
+
+def lasso(X, y, lambda_total=1.0, tol=1e-8, max_iter=1000):
+    r"""
+    Lasso regression.  This function finds the :math:`\vec{\beta}` that minimizes
+
+    .. math::
+
+        \tfrac{1}{2N} ||\vec{y}-X\vec{\beta}||_2^2 + \lambda ||\vec{\beta}||_1
+
+    Args:
+        X (numpy.ndarray): shape (N,D) data matrix.
+        y (numpy.ndarray): shape (N,) target vector.
+        lambda_total (float): must be non-negative. total regularization penalty strength.
+        alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. :math:`\alpha=0` is pure L2 penalty, :math:`\alpha=1` is pure L1 penalty.
+        tol (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **tol**.
+        max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
+
+    Returns:
+        (numpy.ndarray): shape (D,) coefficient vector.
+    """
+
+    N, D = X.shape
+    beta = np.zeros(D, dtype=np.float64)
+    r = y - np.dot(X, beta)
+
+    lasso_(beta, r, X, lambda_total=lambda_total, tol=tol, max_iter=max_iter)
+
+    return beta
+
+
 def enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    Elastic net regression.  This function finds the beta that minimizes
+    Elastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -63,7 +132,7 @@ def enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
 
 def gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    General plastic net regression.  This function finds the beta that minimizes
+    General plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -104,7 +173,7 @@ def gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
 def pridge(X, y, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
-    Plastic ridge regression.  This function finds the beta that minimizes
+    Plastic ridge regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -133,7 +202,7 @@ def pridge(X, y, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
 def plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
-    Plastic lasso regression.  This function finds the beta that minimizes
+    Plastic lasso regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -162,7 +231,7 @@ def plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
 def hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    Hard plastic net regression.  This function finds the beta that minimizes
+    Hard plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -201,7 +270,7 @@ def hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
 
 def spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    Soft plastic net regression.  This function finds the beta that minimizes
+    Soft plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
@@ -239,7 +308,7 @@ def spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
 
 def upnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    Unified plastic net regression.  This function finds the beta that minimizes
+    Unified plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
     .. math::
 
