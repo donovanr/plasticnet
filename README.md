@@ -28,18 +28,20 @@ The Travis configuration is in [.travis.yml](../master/.travis.yml), and doesn't
 Tests are run automatically when commits are pushed to GitHub. To run the tests locally, issue `pytest` in the main project directory.
 
 ### Read the Docs
-Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http://www.sphinx-doc.org/en/master/usage/quickstart.html#autodoc) lives in [docs/source/conf.py](../master/docs/source/conf.py).  To get things to build with Read the Docs, you need to set up a virtual environment in the admin options there so that dependencies like `numpy` can be installed, and point Read the Docs to the `docs/source/rtd-requirements.txt` file.  You should also choose the `CPython 3.x` interpreter.
+Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http://www.sphinx-doc.org/en/master/usage/quickstart.html#autodoc) lives in [docs/source/conf.py](../master/docs/source/conf.py).
+Build configs live in [.readthedocs.yml](../master/.readthedocs.yml).
+In the Read the Docs admin pane, you should choose the `CPython 3.x` interpreter.
 
-Docs are generated automatically when commits are pushed to GitHub.  To generate the docs locally, from the main project directory, use
+Docs are generated automatically when commits are pushed to GitHub.
+To generate the docs locally, from the main project directory, use
 
 ```
 sphinx-build -b html docs/source docs/build
 ```
 
-You may have to create `docs/build` if it doesn't exist yet.
-
 ### Pre-Commit Hooks
-Pre-commit hooks are configured in [.pre-commit-config.yaml](../master/.pre-commit-config.yaml), and need to be set up (once) with `pre-commit install`.  [pre-commit](https://pre-commit.com/) itself can be installed with `pip`.
+Pre-commit hooks are configured in [.pre-commit-config.yaml](../master/.pre-commit-config.yaml), and need to be set up (once) with `pre-commit install`.
+[pre-commit](https://pre-commit.com/) itself can be installed with `pip`.
 
 The pre-commit hooks we use are:
 - [Black](https://black.readthedocs.io/en/stable/) for formatting, with the default settings
