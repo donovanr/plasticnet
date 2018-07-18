@@ -10,6 +10,7 @@ dependencies:
   - numpy
   - pip
   - pytest
+  - pytest-cov
   - scikit-learn
   - sphinx
   - sphinx_rtd_theme
