@@ -1,6 +1,6 @@
 import numpy as np
 
-from .in_place import (
+from ..solvers.in_place import (
     enet_,
     gpnet_,
     hpnet_,
