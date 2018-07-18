@@ -3,7 +3,7 @@ from numba import jit
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def soft_thresh(lam, x):
+def soft_thresh(lam, x):  # pragma: no cover
     r"""
 
     soft_thresh(lam, x)
