@@ -23,7 +23,7 @@ def ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000):
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -59,7 +59,7 @@ def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -99,7 +99,7 @@ def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -140,7 +140,7 @@ def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     lambda1 = alpha * lambda_total
@@ -188,7 +188,7 @@ def general_plastic_net_(
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     lambda1 = alpha * lambda_total
@@ -239,7 +239,7 @@ def plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -278,7 +278,7 @@ def plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -320,7 +320,7 @@ def hard_plastic_net_(
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -362,7 +362,7 @@ def soft_plastic_net_(
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
@@ -404,7 +404,7 @@ def unified_plastic_net_(
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
     Note
-        **beta** and **r** are modified in-place.  As inputs, if :math:`\beta = 0`, then it *must* be the case that :math:`r = y`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
+        **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
 
     N, D = X.shape
