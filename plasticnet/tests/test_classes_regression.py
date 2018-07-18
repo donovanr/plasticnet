@@ -8,7 +8,7 @@ from plasticnet.classes import Regression
 
 
 def test_ordinary_least_squares_explicit(N=200, D=100):
-    """Test explicitly coded special case OLS numba code in solve_ols against sklearn LinearRegression"""
+    r"""Test explicitly coded special case OLS numba code in solve_ordinary_least_squares against sklearn LinearRegression"""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N, coef=True
@@ -25,7 +25,7 @@ def test_ordinary_least_squares_explicit(N=200, D=100):
 
 
 def test_elastic_net_explicit(N=200, D=100):
-    """Test explicitly coded special case elastic net against sklearn ElasticNet"""
+    r"""Test explicitly coded special case elastic net against sklearn ElasticNet"""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True

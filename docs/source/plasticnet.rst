@@ -6,28 +6,28 @@ Plastic Net
 Classes
 -------
 
-.. autoclass:: plasticnet.solvers.classes.Regression
+.. autoclass:: plasticnet.classes.Regression
    :members:
 
 
 User-friendly Functions
 -----------------------
 
-.. autofunction:: plasticnet.solvers.functional.ols
+.. autofunction:: plasticnet.solvers.functional.ordinary_least_squares
 
-.. autofunction:: plasticnet.solvers.functional.enet
+.. autofunction:: plasticnet.solvers.functional.elastic_net
 
-.. autofunction:: plasticnet.solvers.functional.gpnet
+.. autofunction:: plasticnet.solvers.functional.general_plastic_net
 
-.. autofunction:: plasticnet.solvers.functional.pridge
+.. autofunction:: plasticnet.solvers.functional.plastic_ridge
 
-.. autofunction:: plasticnet.solvers.functional.plasso
+.. autofunction:: plasticnet.solvers.functional.plastic_lasso
 
-.. autofunction:: plasticnet.solvers.functional.hpnet
+.. autofunction:: plasticnet.solvers.functional.hard_plastic_net
 
-.. autofunction:: plasticnet.solvers.functional.spnet
+.. autofunction:: plasticnet.solvers.functional.soft_plastic_net
 
-.. autofunction:: plasticnet.solvers.functional.upnet
+.. autofunction:: plasticnet.solvers.functional.unified_plastic_net
 
 
 In-place Functions
