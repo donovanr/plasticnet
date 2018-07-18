@@ -101,10 +101,10 @@ class Regression:
             self.X,
             self.xi,
             self.zeta,
-            lambda_total=1.0,
-            alpha=0.75,
-            tol=1e-8,
-            max_iter=1000,
+            lambda_total=lambda_total,
+            alpha=alpha,
+            tol=tol,
+            max_iter=max_iter,
         )
 
     def fit_pridge(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
@@ -115,9 +115,9 @@ class Regression:
             self._r,
             self.X,
             self.zeta,
-            lambda_total=1.0,
-            tol=1e-8,
-            max_iter=1000,
+            lambda_total=lambda_total,
+            tol=tol,
+            max_iter=max_iter,
         )
 
     def fit_plasso(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
@@ -128,9 +128,9 @@ class Regression:
             self._r,
             self.X,
             self.xi,
-            lambda_total=1.0,
-            tol=1e-8,
-            max_iter=1000,
+            lambda_total=lambda_total,
+            tol=tol,
+            max_iter=max_iter,
         )
 
     def fit_hpnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
@@ -141,10 +141,10 @@ class Regression:
             self._r,
             self.X,
             self.xi,
-            lambda_total=1.0,
-            alpha=0.75,
-            tol=1e-8,
-            max_iter=1000,
+            lambda_total=lambda_total,
+            alpha=alpha,
+            tol=tol,
+            max_iter=max_iter,
         )
 
     def fit_spnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
@@ -155,10 +155,10 @@ class Regression:
             self._r,
             self.X,
             self.zeta,
-            lambda_total=1.0,
-            alpha=0.75,
-            tol=1e-8,
-            max_iter=1000,
+            lambda_total=lambda_total,
+            alpha=alpha,
+            tol=tol,
+            max_iter=max_iter,
         )
 
     def fit_upnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
@@ -169,8 +169,8 @@ class Regression:
             self._r,
             self.X,
             self.xi,
-            lambda_total=1.0,
-            alpha=0.75,
-            tol=1e-8,
-            max_iter=1000,
+            lambda_total=lambda_total,
+            alpha=alpha,
+            tol=tol,
+            max_iter=max_iter,
         )
