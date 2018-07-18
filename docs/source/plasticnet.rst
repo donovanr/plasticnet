@@ -15,6 +15,10 @@ User-friendly Functions
 
 .. autofunction:: plasticnet.solvers.functional.ordinary_least_squares
 
+.. autofunction:: plasticnet.solvers.functional.ridge
+
+.. autofunction:: plasticnet.solvers.functional.lasso
+
 .. autofunction:: plasticnet.solvers.functional.elastic_net
 
 .. autofunction:: plasticnet.solvers.functional.general_plastic_net
@@ -34,6 +38,10 @@ In-place Functions
 ------------------
 
 .. autofunction:: plasticnet.solvers.in_place.ordinary_least_squares_
+
+.. autofunction:: plasticnet.solvers.in_place.ridge_
+
+.. autofunction:: plasticnet.solvers.in_place.lasso_
 
 .. autofunction:: plasticnet.solvers.in_place.elastic_net_
 
