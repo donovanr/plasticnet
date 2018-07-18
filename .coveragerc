@@ -1,4 +1,5 @@
 [run]
+source=plasticnet
 omit =
     */tests/*
     __init__.py
