@@ -46,7 +46,7 @@ class Regression:
         self.zeta = np.zeros(D, dtype=np.float64)
 
     def set_beta(self, beta):
-        r"""Sets :math:`\vec{beta}` to desired value while also updating the residual vector via :math:`\vec{r} = \vec{y} - X\vec{\beta}`."""
+        r"""Sets :math:`\vec{\beta}` to desired value while also updating the residual vector via :math:`\vec{r} = \vec{y} - X\vec{\beta}`."""
         self.beta = beta
         self._r = self.y - np.dot(self.X, self.beta)
 
