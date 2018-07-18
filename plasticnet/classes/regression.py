@@ -19,7 +19,7 @@ class Regression:
     This class encapsulates a regression problem.
     It stores the data matrix :math:`X` and the target :math:`\vec{y}`, and provides as methods all of the in-place solvers in :mod:`plasticnet.solvers.in_place`.
     It also stores the coefficient vector :math:`\vec{\beta}`, and the penalized regression target vectors :math:`\vec{\xi}` (L1 target) and :math:`\vec{\zeta}` (L2 target).
-    Calling any of the ``fit_*`` methods below will update :math:`\vec{\beta}` in-place.
+    Calling any of the ``fit_`` methods below will update :math:`\vec{\beta}` in-place.
 
     Args:
         X (numpy.ndarray): shape (N,D) data matrix.
