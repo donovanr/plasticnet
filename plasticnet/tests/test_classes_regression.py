@@ -19,7 +19,7 @@ def test_ordinary_least_squares_explicit(N=200, D=100):
     lm_sklearn.fit(X, y)
 
     lm_pnet = Regression(X, y)
-    lm_pnet.fit_ols(tol=1e-8, max_iter=1000)
+    lm_pnet.fit_ordinary_least_squares(tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
 
@@ -41,6 +41,8 @@ def test_elastic_net_explicit(N=200, D=100):
     lm_sklearn.fit(X, y)
 
     lm_pnet = Regression(X, y)
-    lm_pnet.fit_enet(lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000)
+    lm_pnet.fit_elastic_net(
+        lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+    )
 
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
