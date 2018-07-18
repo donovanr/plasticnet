@@ -1,16 +1,16 @@
 import numpy as np
 
 from .in_place import (
-    enet_,
-    gpnet_,
-    hpnet_,
+    elastic_net_,
+    general_plastic_net_,
+    hard_plastic_net_,
     lasso_,
-    ols_,
-    plasso_,
-    pridge_,
+    ordinary_least_squares_,
+    plastic_lasso_,
+    plastic_ridge_,
     ridge_,
-    spnet_,
-    upnet_,
+    soft_plastic_net_,
+    unified_plastic_net_,
 )
 
 
@@ -36,7 +36,7 @@ def ols(X, y, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    ols_(beta, r, X, tol=tol, max_iter=max_iter)
+    ordinary_least_squares_(beta, r, X, tol=tol, max_iter=max_iter)
 
     return beta
 
@@ -123,7 +123,7 @@ def enet(X, y, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    enet_(
+    elastic_net_(
         beta, r, X, lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
@@ -156,7 +156,7 @@ def gpnet(X, y, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    gpnet_(
+    general_plastic_net_(
         beta,
         r,
         X,
@@ -195,7 +195,9 @@ def pridge(X, y, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    pridge_(beta, r, X, zeta, lambda_total=lambda_total, tol=tol, max_iter=max_iter)
+    plastic_ridge_(
+        beta, r, X, zeta, lambda_total=lambda_total, tol=tol, max_iter=max_iter
+    )
 
     return beta
 
@@ -224,7 +226,9 @@ def plasso(X, y, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    plasso_(beta, r, X, xi, lambda_total=lambda_total, tol=tol, max_iter=max_iter)
+    plastic_lasso_(
+        beta, r, X, xi, lambda_total=lambda_total, tol=tol, max_iter=max_iter
+    )
 
     return beta
 
@@ -254,7 +258,7 @@ def hpnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    hpnet_(
+    hard_plastic_net_(
         beta,
         r,
         X,
@@ -292,7 +296,7 @@ def spnet(X, y, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    spnet_(
+    soft_plastic_net_(
         beta,
         r,
         X,
@@ -330,7 +334,7 @@ def upnet(X, y, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     beta = np.zeros(D, dtype=np.float64)
     r = y - np.dot(X, beta)
 
-    upnet_(
+    unified_plastic_net_(
         beta,
         r,
         X,

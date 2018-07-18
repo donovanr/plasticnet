@@ -5,9 +5,9 @@ from ..utils import math
 
 
 @jit(nopython=True, nogil=True, cache=False)
-def ols_(beta, r, X, tol=1e-8, max_iter=1000):
+def ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000):
     r"""
-    ols_(beta, r, X, tol=1e-8, max_iter=1000)
+    ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000)
 
     Ordinary least squares regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -120,9 +120,9 @@ def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
+def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
-    enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
+    elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Elastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -164,9 +164,11 @@ def enet_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
+def general_plastic_net_(
+    beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
+):
     r"""
-    gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
+    general_plastic_net_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     General plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -217,9 +219,9 @@ def gpnet_(beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_ite
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
+def plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
-    pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000)
+    plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000)
 
     Plastic ridge regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -242,7 +244,7 @@ def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
     N, D = X.shape
 
-    gpnet_(
+    general_plastic_net_(
         beta,
         r,
         X,
@@ -256,9 +258,9 @@ def pridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
+def plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
-    plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000)
+    plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000)
 
     Plastic lasso regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -281,7 +283,7 @@ def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
     N, D = X.shape
 
-    gpnet_(
+    general_plastic_net_(
         beta,
         r,
         X,
@@ -295,9 +297,11 @@ def plasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
+def hard_plastic_net_(
+    beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
+):
     r"""
-    hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
+    hard_plastic_net_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Hard plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -321,7 +325,7 @@ def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 
     N, D = X.shape
 
-    gpnet_(
+    general_plastic_net_(
         beta,
         r,
         X,
@@ -335,9 +339,11 @@ def hpnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
+def soft_plastic_net_(
+    beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
+):
     r"""
-    spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
+    soft_plastic_net_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Soft plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -361,7 +367,7 @@ def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
 
     N, D = X.shape
 
-    gpnet_(
+    general_plastic_net_(
         beta,
         r,
         X,
@@ -375,9 +381,11 @@ def spnet_(beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
 
 
 @jit(nopython=True, nogil=True, cache=True)
-def upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
+def unified_plastic_net_(
+    beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
+):
     r"""
-    upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
+    unified_plastic_net_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
 
     Unified plastic net regression.  This function finds the :math:`\vec{\beta}` that minimizes
 
@@ -401,7 +409,7 @@ def upnet_(beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 
     N, D = X.shape
 
-    gpnet_(
+    general_plastic_net_(
         beta,
         r,
         X,

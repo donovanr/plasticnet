@@ -33,18 +33,18 @@ User-friendly Functions
 In-place Functions
 ------------------
 
-.. autofunction:: plasticnet.solvers.in_place.ols_
+.. autofunction:: plasticnet.solvers.in_place.ordinary_least_squares_
 
-.. autofunction:: plasticnet.solvers.in_place.enet_
+.. autofunction:: plasticnet.solvers.in_place.elastic_net_
 
-.. autofunction:: plasticnet.solvers.in_place.gpnet_
+.. autofunction:: plasticnet.solvers.in_place.general_plastic_net_
 
-.. autofunction:: plasticnet.solvers.in_place.pridge_
+.. autofunction:: plasticnet.solvers.in_place.plastic_ridge_
 
-.. autofunction:: plasticnet.solvers.in_place.plasso_
+.. autofunction:: plasticnet.solvers.in_place.plastic_lasso_
 
-.. autofunction:: plasticnet.solvers.in_place.hpnet_
+.. autofunction:: plasticnet.solvers.in_place.hard_plastic_net_
 
-.. autofunction:: plasticnet.solvers.in_place.spnet_
+.. autofunction:: plasticnet.solvers.in_place.soft_plastic_net_
 
-.. autofunction:: plasticnet.solvers.in_place.upnet_
+.. autofunction:: plasticnet.solvers.in_place.unified_plastic_net_

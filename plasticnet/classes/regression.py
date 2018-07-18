@@ -1,16 +1,16 @@
 import numpy as np
 
 from ..solvers.in_place import (
-    enet_,
-    gpnet_,
-    hpnet_,
+    elastic_net_,
+    general_plastic_net_,
+    hard_plastic_net_,
     lasso_,
-    ols_,
-    plasso_,
-    pridge_,
+    ordinary_least_squares_,
+    plastic_lasso_,
+    plastic_ridge_,
     ridge_,
-    spnet_,
-    upnet_,
+    soft_plastic_net_,
+    unified_plastic_net_,
 )
 
 
@@ -52,12 +52,12 @@ class Regression:
 
     def fit_ols(self, tol=1e-8, max_iter=1000):
         r"""In-place ordinary least squares regression.
-        See :meth:`plasticnet.solvers.in_place.ols_` for documentation."""
-        ols_(self.beta, self._r, self.X, tol=tol, max_iter=max_iter)
+        See :meth:`plasticnet.solvers.in_place.ordinary_least_squares_` for documentation."""
+        ordinary_least_squares_(self.beta, self._r, self.X, tol=tol, max_iter=max_iter)
 
     def fit_ridge(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place ridge regression.
-        See :meth:`plasticnet.solvers.in_place.enet_` for documentation."""
+        See :meth:`plasticnet.solvers.in_place.elastic_net_` for documentation."""
         ridge_(
             self.beta,
             self._r,
@@ -69,7 +69,7 @@ class Regression:
 
     def fit_lasso(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place lasso regression.
-        See :meth:`plasticnet.solvers.in_place.enet_` for documentation."""
+        See :meth:`plasticnet.solvers.in_place.elastic_net_` for documentation."""
         lasso_(
             self.beta,
             self._r,
@@ -81,8 +81,8 @@ class Regression:
 
     def fit_enet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place elastic net regression.
-        See :meth:`plasticnet.solvers.in_place.enet_` for documentation."""
-        enet_(
+        See :meth:`plasticnet.solvers.in_place.elastic_net_` for documentation."""
+        elastic_net_(
             self.beta,
             self._r,
             self.X,
@@ -94,8 +94,8 @@ class Regression:
 
     def fit_gpnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place general plastic net regression.
-        See :meth:`plasticnet.solvers.in_place.gpnet_` for documentation."""
-        gpnet_(
+        See :meth:`plasticnet.solvers.in_place.general_plastic_net_` for documentation."""
+        general_plastic_net_(
             self.beta,
             self._r,
             self.X,
@@ -109,8 +109,8 @@ class Regression:
 
     def fit_pridge(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place plastic ridge regression.
-        See :meth:`plasticnet.solvers.in_place.pridge_` for documentation."""
-        pridge_(
+        See :meth:`plasticnet.solvers.in_place.plastic_ridge_` for documentation."""
+        plastic_ridge_(
             self.beta,
             self._r,
             self.X,
@@ -122,8 +122,8 @@ class Regression:
 
     def fit_plasso(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place plastic lasso regression.
-        See :meth:`plasticnet.solvers.in_place.plasso_` for documentation."""
-        plasso_(
+        See :meth:`plasticnet.solvers.in_place.plastic_lasso_` for documentation."""
+        plastic_lasso_(
             self.beta,
             self._r,
             self.X,
@@ -135,8 +135,8 @@ class Regression:
 
     def fit_hpnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place hard plastic net regression.
-        See :meth:`plasticnet.solvers.in_place.hpnet_` for documentation."""
-        hpnet_(
+        See :meth:`plasticnet.solvers.in_place.hard_plastic_net_` for documentation."""
+        hard_plastic_net_(
             self.beta,
             self._r,
             self.X,
@@ -149,8 +149,8 @@ class Regression:
 
     def fit_spnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place soft plastic net regression.
-        See :meth:`plasticnet.solvers.in_place.spnet_` for documentation."""
-        spnet_(
+        See :meth:`plasticnet.solvers.in_place.soft_plastic_net_` for documentation."""
+        soft_plastic_net_(
             self.beta,
             self._r,
             self.X,
@@ -163,8 +163,8 @@ class Regression:
 
     def fit_upnet(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place unified plastic net regression.
-        See :meth:`plasticnet.solvers.in_place.upnet_` for documentation."""
-        upnet_(
+        See :meth:`plasticnet.solvers.in_place.unified_plastic_net_` for documentation."""
+        unified_plastic_net_(
             self.beta,
             self._r,
             self.X,
