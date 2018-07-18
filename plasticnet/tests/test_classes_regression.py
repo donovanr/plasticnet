@@ -4,10 +4,10 @@ from sklearn import linear_model
 from sklearn.preprocessing import scale
 from sklearn.datasets import make_regression
 
-from plasticnet.solvers.classes import Regression
+from plasticnet.classes import Regression
 
 
-def test_ols_explicit(N=200, D=100):
+def test_ordinary_least_squares_explicit(N=200, D=100):
     """Test explicitly coded special case OLS numba code in solve_ols against sklearn LinearRegression"""
 
     X, y, beta_true = make_regression(
@@ -24,7 +24,7 @@ def test_ols_explicit(N=200, D=100):
     np.testing.assert_almost_equal(lm_sklearn.coef_, lm_pnet.beta, decimal=6)
 
 
-def test_enet_explicit(N=200, D=100):
+def test_elastic_net_explicit(N=200, D=100):
     """Test explicitly coded special case elastic net against sklearn ElasticNet"""
 
     X, y, beta_true = make_regression(
