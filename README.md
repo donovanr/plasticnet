@@ -11,6 +11,7 @@ The main contents of the repository are organized as:
 ├── docs
 │   └── source
 └── plasticnet
+    ├── classes
     ├── solvers
     ├── tests
     └── utils
