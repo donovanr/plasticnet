@@ -57,7 +57,7 @@ class Regression:
 
     def fit_ridge(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place ridge regression.
-        See :meth:`plasticnet.solvers.in_place.elastic_net_` for documentation."""
+        See :meth:`plasticnet.solvers.in_place.ridge_` for documentation."""
         ridge_(
             self.beta,
             self._r,
@@ -69,7 +69,7 @@ class Regression:
 
     def fit_lasso(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place lasso regression.
-        See :meth:`plasticnet.solvers.in_place.elastic_net_` for documentation."""
+        See :meth:`plasticnet.solvers.in_place.lasso_` for documentation."""
         lasso_(
             self.beta,
             self._r,
