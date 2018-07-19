@@ -6,6 +6,8 @@ from sklearn.datasets import make_regression
 
 from plasticnet.solvers.functional import (
     ordinary_least_squares,
+    ridge,
+    lasso,
     elastic_net,
     general_plastic_net,
 )
@@ -25,6 +27,46 @@ def test_ordinary_least_squares_explicit(N=200, D=100):
     beta = ordinary_least_squares(X, y, tol=1e-8, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=6)
+
+
+def test_ridge_explicit(N=200, D=100):
+    r"""Test explicitly coded special case ridge numba code in :meth:`plasticnet.solvers.functional.ridge` against sklearn Ridge"""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=0.0, tol=1e-8, max_iter=1000
+    )
+    lm.fit(X, y)
+
+    beta = ridge(X, y, lambda_total=lambda_total, tol=1e-8, max_iter=1000)
+
+    np.testing.assert_almost_equal(beta, lm.coef_, decimal=6)
+
+
+def test_lasso_explicit(N=200, D=100):
+    r"""Test explicitly coded special case ridge numba code in :meth:`plasticnet.solvers.functional.ridge` against sklearn Ridge"""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=1.0, tol=1e-8, max_iter=1000
+    )
+    lm.fit(X, y)
+
+    beta = lasso(X, y, lambda_total=lambda_total, tol=1e-8, max_iter=1000)
+
+    np.testing.assert_almost_equal(beta, lm.coef_, decimal=6)
 
 
 def test_elastic_net_explicit_ordinary_least_squares(N=200, D=100):

@@ -53,7 +53,6 @@ def ridge(X, y, lambda_total=1.0, tol=1e-8, max_iter=1000):
         X (numpy.ndarray): shape (N,D) data matrix.
         y (numpy.ndarray): shape (N,) target vector.
         lambda_total (float): must be non-negative. total regularization penalty strength.
-        alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. :math:`\alpha=0` is pure L2 penalty, :math:`\alpha=1` is pure L1 penalty.
         tol (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **tol**.
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
@@ -82,7 +81,6 @@ def lasso(X, y, lambda_total=1.0, tol=1e-8, max_iter=1000):
         X (numpy.ndarray): shape (N,D) data matrix.
         y (numpy.ndarray): shape (N,) target vector.
         lambda_total (float): must be non-negative. total regularization penalty strength.
-        alpha (float): mixing parameter between L1 and L1 penalties. must be between zero and one. :math:`\alpha=0` is pure L2 penalty, :math:`\alpha=1` is pure L1 penalty.
         tol (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **tol**.
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
