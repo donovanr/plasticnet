@@ -22,7 +22,7 @@ install:
   - pip install -e .
 
 script:
-  - pytest -v
+  - py.test --cov-report xml --cov plasticnet --verbose
 
 after_success: 
   - codecov
