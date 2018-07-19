@@ -35,6 +35,7 @@ pip install -e .
 We use:
 - [GitHub](https://github.com) for code hosting and issue tracking
 - [Travis CI](https://travis-ci.org/) for testing
+- [Codecov](https://codecov.io/) for code coverage reporting
 - [Read the Docs](https://readthedocs.org/) for auto-generating and publishing the documentation
 - [pre-commit hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) for formatting and linting
 
@@ -42,6 +43,11 @@ We use:
 The Travis configuration is in [.travis.yml](../master/.travis.yml), and doesn't have anything fancy set up.
 
 Tests are run automatically when commits are pushed to GitHub. To run the tests locally, issue `pytest` in the main project directory.
+
+### Codecov
+Configuration for Codecov is in [.codecov.yml](../master/.codecov.yml).
+Travis is set up to run `pytest-cov`, and the resulting report is pushed to Codecov.
+The configuration for `pytest-cov` is in [.coveragerc](../master/.coveragerc)
 
 ### Read the Docs
 Documentation config for [Sphinx](http://www.sphinx-doc.org/) + [autodoc](http://www.sphinx-doc.org/en/master/usage/quickstart.html#autodoc) lives in [docs/source/conf.py](../master/docs/source/conf.py).
