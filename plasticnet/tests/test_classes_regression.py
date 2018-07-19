@@ -8,7 +8,7 @@ from plasticnet.classes import Regression
 
 
 def test_set_beta(N=200, D=100):
-    r"""Test beta setter"""
+    r"""Test beta property"""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N, coef=True

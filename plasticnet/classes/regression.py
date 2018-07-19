@@ -44,7 +44,7 @@ class Regression:
 
     @property
     def beta(self):
-        """I'm the 'beta' property."""
+        """beta is a property becasue when setting :math:`\vec{\beta}` you also need to set :math:`\vec{r}` such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`"""
         return self._beta
 
     @beta.setter
