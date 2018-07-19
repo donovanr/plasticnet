@@ -13,4 +13,3 @@ omit =
     */__init__.py
     */*/__init__.py
     */version.py
-    plasticnet/solvers/in_place.py

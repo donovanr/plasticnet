@@ -4,7 +4,7 @@ from numba import jit
 from ..utils import math
 
 
-@jit(nopython=True, nogil=True, cache=False)
+@jit(nopython=True, nogil=True, cache=False)  # pragma: no cover
 def ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000):
     r"""
     ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000)
@@ -39,7 +39,7 @@ def ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000):
             beta[j] += rho[j]
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
     ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000)
@@ -79,7 +79,7 @@ def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
             beta_old[j] = beta[j]
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
     lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000)
@@ -119,7 +119,7 @@ def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
             beta_old[j] = beta[j]
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
     r"""
     elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000)
@@ -163,7 +163,7 @@ def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
             beta_old[j] = beta[j]
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def general_plastic_net_(
     beta, r, X, xi, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 ):
@@ -218,7 +218,7 @@ def general_plastic_net_(
             beta_old[j] = beta[j]
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
     plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000)
@@ -257,7 +257,7 @@ def plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
     )
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
     r"""
     plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000)
@@ -296,7 +296,7 @@ def plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
     )
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def hard_plastic_net_(
     beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 ):
@@ -338,7 +338,7 @@ def hard_plastic_net_(
     )
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def soft_plastic_net_(
     beta, r, X, zeta, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 ):
@@ -380,7 +380,7 @@ def soft_plastic_net_(
     )
 
 
-@jit(nopython=True, nogil=True, cache=True)
+@jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
 def unified_plastic_net_(
     beta, r, X, xi, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000
 ):
