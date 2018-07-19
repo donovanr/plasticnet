@@ -19,7 +19,7 @@ def test_set_beta(N=200, D=100):
 
     new_beta = np.random.randn(D)
     new_r = y - np.dot(X, new_beta)
-    lm_pnet.set_beta(new_beta)
+    lm_pnet.beta = new_beta
 
     np.testing.assert_almost_equal(lm_pnet.beta, new_beta, decimal=6)
     np.testing.assert_almost_equal(lm_pnet._r, new_r, decimal=6)
