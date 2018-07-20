@@ -19,7 +19,7 @@ from plasticnet.solvers.functional import (
 
 
 def test_ordinary_least_squares_explicit(N=200, D=100):
-    r"""Test explicitly coded special case OLS numba code in :meth:`plasticnet.solvers.functional.ordinary_least_squares` against sklearn LinearRegression"""
+    r"""Test explicitly coded special case OLS numba code in :meth:`plasticnet.solvers.functional.ordinary_least_squares` against sklearn LinearRegression."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N, coef=True
@@ -35,7 +35,7 @@ def test_ordinary_least_squares_explicit(N=200, D=100):
 
 
 def test_ridge_explicit(N=200, D=100):
-    r"""Test explicitly coded special case ridge numba code in :meth:`plasticnet.solvers.functional.ridge` against sklearn elastic net with l1_ratio=0"""
+    r"""Test explicitly coded special case ridge numba code in :meth:`plasticnet.solvers.functional.ridge` against sklearn elastic net with l1_ratio=0."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N, coef=True
@@ -55,7 +55,7 @@ def test_ridge_explicit(N=200, D=100):
 
 
 def test_lasso_explicit(N=200, D=100):
-    r"""Test explicitly coded special case lasso numba code in :meth:`plasticnet.solvers.functional.lasso` against sklearn elastic net with `l1_ratio=1`"""
+    r"""Test explicitly coded special case lasso numba code in :meth:`plasticnet.solvers.functional.lasso` against sklearn elastic net with `l1_ratio=1`."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N, coef=True
@@ -75,7 +75,7 @@ def test_lasso_explicit(N=200, D=100):
 
 
 def test_elastic_net_explicit_ordinary_least_squares(N=200, D=100):
-    r"""Test explicitly coded special case elastic net with :math:`\lambda=0` in :meth:`plasticnet.solvers.functional.elastic_net` against sklearn LinearRegression"""
+    r"""Test explicitly coded special case elastic net with :math:`\lambda=0` in :meth:`plasticnet.solvers.functional.elastic_net` against sklearn LinearRegression."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N, coef=True
@@ -91,7 +91,7 @@ def test_elastic_net_explicit_ordinary_least_squares(N=200, D=100):
 
 
 def test_elastic_net_explicit(N=200, D=100):
-    r"""Test explicitly coded elastic net in :meth:`plasticnet.solvers.functional.elastic_net` against sklearn ElasticNet"""
+    r"""Test explicitly coded elastic net in :meth:`plasticnet.solvers.functional.elastic_net` against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -114,7 +114,7 @@ def test_elastic_net_explicit(N=200, D=100):
 
 
 def test_ordinary_least_squares_general(N=200, D=100):
-    r"""Test OLS (:math:`\lambda=0` in :meth:`plasticnet.solvers.functional.general_plastic_net`) against sklearn LinearRegression"""
+    r"""Test OLS (:math:`\lambda=0` in :meth:`plasticnet.solvers.functional.general_plastic_net`) against sklearn LinearRegression."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -137,7 +137,7 @@ def test_ordinary_least_squares_general(N=200, D=100):
 
 
 def test_elastic_net_general(N=200, D=100):
-    r"""Test elastic net (:math:`\xi=0` and :math:`\zeta=0` in :meth:`plasticnet.solvers.functional.general_plastic_net`) against sklearn ElasticNet"""
+    r"""Test elastic net (:math:`\xi=0` and :math:`\zeta=0` in :meth:`plasticnet.solvers.functional.general_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -162,7 +162,7 @@ def test_elastic_net_general(N=200, D=100):
 
 
 def test_plastic_ridge_trivial(N=200, D=100):
-    r"""Test plastic ridge(:math:`\zeta=0` in :meth:`plasticnet.solvers.functional.plastic_ridge`) against sklearn ElasticNet"""
+    r"""Test plastic ridge(:math:`\zeta=0` in :meth:`plasticnet.solvers.functional.plastic_ridge`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -183,7 +183,7 @@ def test_plastic_ridge_trivial(N=200, D=100):
 
 
 def test_plastic_ridge_real(N=200, D=100):
-    r"""Test :meth:`plasticnet.solvers.functional.plastic_ridge` against sklearn ElasticNet with transformed variables"""
+    r"""Test :meth:`plasticnet.solvers.functional.plastic_ridge` against sklearn ElasticNet with transformed variables."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -208,7 +208,7 @@ def test_plastic_ridge_real(N=200, D=100):
 
 
 def test_plastic_lasso_trivial(N=200, D=100):
-    r"""Test plastic lasso (:math:`\xi=0` in :meth:`plasticnet.solvers.functional.plastic_lasso`) against sklearn ElasticNet"""
+    r"""Test plastic lasso (:math:`\xi=0` in :meth:`plasticnet.solvers.functional.plastic_lasso`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -229,7 +229,7 @@ def test_plastic_lasso_trivial(N=200, D=100):
 
 
 def test_plastic_lasso_real(N=200, D=100):
-    r"""Test :meth:`plasticnet.solvers.functional.plastic_lasso` against sklearn ElasticNet with transformed variables"""
+    r"""Test :meth:`plasticnet.solvers.functional.plastic_lasso` against sklearn ElasticNet with transformed variables."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -254,7 +254,7 @@ def test_plastic_lasso_real(N=200, D=100):
 
 
 def test_hard_plastic_net(N=200, D=100):
-    r"""Test hard plastic net (:math:`\xi=0` and in :meth:`plasticnet.solvers.functional.hard_plastic_net`) against sklearn ElasticNet"""
+    r"""Test hard plastic net (:math:`\xi=0` and in :meth:`plasticnet.solvers.functional.hard_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -278,7 +278,7 @@ def test_hard_plastic_net(N=200, D=100):
 
 
 def test_soft_plastic_net(N=200, D=100):
-    r"""Test soft plastic net (:math:`\zeta=0` in :meth:`plasticnet.solvers.functional.soft_plastic_net`) against sklearn ElasticNet"""
+    r"""Test soft plastic net (:math:`\zeta=0` in :meth:`plasticnet.solvers.functional.soft_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -302,7 +302,7 @@ def test_soft_plastic_net(N=200, D=100):
 
 
 def test_unified_plastic_net_trivial(N=200, D=100):
-    r"""Test unified plastic net (:math:`\xi=0` in :meth:`plasticnet.solvers.functional.unified_plastic_net`) against sklearn ElasticNet"""
+    r"""Test unified plastic net (:math:`\xi=0` in :meth:`plasticnet.solvers.functional.unified_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -326,7 +326,7 @@ def test_unified_plastic_net_trivial(N=200, D=100):
 
 
 def test_unified_plastic_net_real(N=200, D=100):
-    r"""Test unified plastic net (:math:`\xi=0` in :meth:`plasticnet.solvers.functional.unified_plastic_net`) against sklearn ElasticNet"""
+    r"""Test :meth:`plasticnet.solvers.functional.unified_plastic_net` against sklearn ElasticNet with transformed variables."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
