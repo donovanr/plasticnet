@@ -345,6 +345,50 @@ def test_soft_plastic_net_trivial(N=200, D=100):
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=4)
 
 
+def test_soft_plastic_net_limiting_cases(N=200, D=100):
+    r"""Test :meth:`plasticnet.solvers.functional.soft_plastic_net` against sklearn ElasticNet in limiting cases."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    zeta = np.zeros(D, dtype=np.float64)
+
+    X_prime = X
+    y_prime = y - np.dot(X, zeta)
+
+    alpha = 1.0
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+    )
+    lm.fit(X_prime, y_prime)
+    beta_lm = lm.coef_ + zeta
+
+    beta = soft_plastic_net(
+        X, y, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, beta, decimal=4)
+
+    alpha = 0.0
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+    )
+    lm.fit(X, y)
+
+    beta_lm = lm.coef_
+
+    beta = soft_plastic_net(
+        X, y, zeta, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, beta, decimal=4)
+
+
 def test_unified_plastic_net_trivial(N=200, D=100):
     r"""Test unified plastic net (:math:`\xi=0` in :meth:`plasticnet.solvers.functional.unified_plastic_net`) against sklearn ElasticNet."""
 
