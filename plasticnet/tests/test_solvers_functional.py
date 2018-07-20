@@ -253,7 +253,7 @@ def test_plastic_lasso_real(N=200, D=100):
     np.testing.assert_almost_equal(beta_lm, beta, decimal=4)
 
 
-def test_hard_plastic_net(N=200, D=100):
+def test_hard_plastic_net_trivial(N=200, D=100):
     r"""Test hard plastic net (:math:`\xi=0` and in :meth:`plasticnet.solvers.functional.hard_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
@@ -277,7 +277,51 @@ def test_hard_plastic_net(N=200, D=100):
     np.testing.assert_almost_equal(lm.coef_, beta, decimal=4)
 
 
-def test_soft_plastic_net(N=200, D=100):
+def test_hard_plastic_net_limiting_cases(N=200, D=100):
+    r"""Test hard plastic net :meth:`plasticnet.solvers.functional.hard_plastic_net` against sklearn ElasticNet in limiting cases."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    xi = np.random.randn(D).astype(np.float64)
+
+    X_prime = X
+    y_prime = y - np.dot(X, xi)
+
+    alpha = 1.0
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+    )
+    lm.fit(X_prime, y_prime)
+    beta_lm = lm.coef_ + xi
+
+    beta = hard_plastic_net(
+        X, y, xi, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, beta, decimal=4)
+
+    alpha = 0.0
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+    )
+    lm.fit(X, y)
+
+    beta_lm = lm.coef_
+
+    beta = hard_plastic_net(
+        X, y, xi, lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, beta, decimal=4)
+
+
+def test_soft_plastic_net_trivial(N=200, D=100):
     r"""Test soft plastic net (:math:`\zeta=0` in :meth:`plasticnet.solvers.functional.soft_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
