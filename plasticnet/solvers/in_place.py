@@ -30,13 +30,16 @@ def ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000):
     rho = np.ones(D, dtype=np.float64) + tol
 
     iter_num = 0
+    converged = False
 
-    while np.max(rho) > tol and iter_num < max_iter:
+    while not converged and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
             rho[j] = np.dot(X[:, j], r) / N
             r -= rho[j] * X[:, j]
             beta[j] += rho[j]
+        converged = np.max(rho) < tol
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -58,6 +61,9 @@ def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
         tol (float): convergence criterion for coordinate descent. coordinate descent runs until the maximum element-wise change in **beta** is less than **tol**.
         max_iter (int): maximum number of update passes through all P elements of **beta**, in case **tol** is never met.
 
+    Returns:
+        converged (tuple): tuple ``(converged, iter_num)`` containing convergence information. ``converged`` (bool) is whether or not the algorithm converged in the alloted number of iterations) and ``iter_num`` (int) is how many iterations the algorithm ran for.
+
     Note
         **beta** and **r** are modified in-place.  As inputs, if :math:`\vec{\beta} = 0`, then it *must* be the case that :math:`\vec{r} = \vec{y}`, or the function will not converge to the correct answer.  In general, the inputs **beta** and **r** must be coordinated such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`.
     """
@@ -68,8 +74,9 @@ def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
     rho = np.ones(D, dtype=np.float64) + tol
 
     iter_num = 0
+    converged = False
 
-    while np.max(delta_beta) > tol and iter_num < max_iter:
+    while not converged and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
             rho[j] = np.dot(X[:, j], r) / N
@@ -77,6 +84,8 @@ def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
+        converged = np.max(delta_beta) < tol
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -108,8 +117,9 @@ def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
     rho = np.ones(D, dtype=np.float64) + tol
 
     iter_num = 0
+    converged = False
 
-    while np.max(delta_beta) > tol and iter_num < max_iter:
+    while not converged and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
             rho[j] = np.dot(X[:, j], r) / N
@@ -117,6 +127,8 @@ def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
+        converged = np.max(delta_beta) < tol
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -152,8 +164,9 @@ def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
     rho = np.ones(D, dtype=np.float64) + tol
 
     iter_num = 0
+    converged = False
 
-    while np.max(delta_beta) > tol and iter_num < max_iter:
+    while not converged and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
             rho[j] = np.dot(X[:, j], r) / N
@@ -161,6 +174,8 @@ def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
+        converged = np.max(delta_beta) < tol
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -200,8 +215,9 @@ def general_plastic_net_(
     rho = np.ones(D, dtype=np.float64) + tol
 
     iter_num = 0
+    converged = False
 
-    while np.max(delta_beta) > tol and iter_num < max_iter:
+    while not converged and iter_num < max_iter:
         iter_num += 1
         for j in range(D):
             rho[j] = np.dot(X[:, j], r) / N
@@ -216,6 +232,8 @@ def general_plastic_net_(
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
+        converged = np.max(delta_beta) < tol
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -244,7 +262,7 @@ def plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
     N, D = X.shape
 
-    general_plastic_net_(
+    converged, iter_num = general_plastic_net_(
         beta,
         r,
         X,
@@ -255,6 +273,7 @@ def plastic_ridge_(beta, r, X, zeta, lambda_total=1.0, tol=1e-8, max_iter=1000):
         tol=tol,
         max_iter=max_iter,
     )
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -283,7 +302,7 @@ def plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
 
     N, D = X.shape
 
-    general_plastic_net_(
+    converged, iter_num = general_plastic_net_(
         beta,
         r,
         X,
@@ -294,6 +313,7 @@ def plastic_lasso_(beta, r, X, xi, lambda_total=1.0, tol=1e-8, max_iter=1000):
         tol=tol,
         max_iter=max_iter,
     )
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -325,7 +345,7 @@ def hard_plastic_net_(
 
     N, D = X.shape
 
-    general_plastic_net_(
+    converged, iter_num = general_plastic_net_(
         beta,
         r,
         X,
@@ -336,6 +356,7 @@ def hard_plastic_net_(
         tol=tol,
         max_iter=max_iter,
     )
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -367,7 +388,7 @@ def soft_plastic_net_(
 
     N, D = X.shape
 
-    general_plastic_net_(
+    converged, iter_num = general_plastic_net_(
         beta,
         r,
         X,
@@ -378,6 +399,7 @@ def soft_plastic_net_(
         tol=tol,
         max_iter=max_iter,
     )
+    return (converged, iter_num)
 
 
 @jit(nopython=True, nogil=True, cache=True)  # pragma: no cover
@@ -409,7 +431,7 @@ def unified_plastic_net_(
 
     N, D = X.shape
 
-    general_plastic_net_(
+    converged, iter_num = general_plastic_net_(
         beta,
         r,
         X,
@@ -420,3 +442,4 @@ def unified_plastic_net_(
         tol=tol,
         max_iter=max_iter,
     )
+    return (converged, iter_num)
