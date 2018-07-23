@@ -37,7 +37,7 @@ def test_ordinary_least_squares_explicit(N=200, D=100):
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
-    lm_pnet.fit_ordinary_least_squares(tol=1e-8, max_iter=1000)
+    lm_pnet.fit_ordinary_least_squares(tol=1e-12, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
 
@@ -52,13 +52,11 @@ def test_ridge_explicit(N=200, D=100):
 
     lambda_total = np.random.exponential()
 
-    lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=0.0, tol=1e-8, max_iter=1000
-    )
+    lm = linear_model.Ridge(alpha=lambda_total * N, tol=1e-12, max_iter=1000)
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
-    lm_pnet.fit_ridge(lambda_total=lambda_total, tol=1e-8, max_iter=1000)
+    lm_pnet.fit_ridge(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
 
@@ -74,12 +72,12 @@ def test_lasso_explicit(N=200, D=100):
     lambda_total = np.random.exponential()
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=1.0, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=1.0, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
-    lm_pnet.fit_lasso(lambda_total=lambda_total, tol=1e-8, max_iter=1000)
+    lm_pnet.fit_lasso(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
 
@@ -96,13 +94,13 @@ def test_elastic_net_explicit(N=200, D=100):
     alpha = np.random.rand()
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
     lm_pnet.fit_elastic_net(
-        lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
@@ -122,7 +120,7 @@ def test_general_plastic_net(N=200, D=100):
     zeta = np.zeros(D, dtype=np.float64)
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
@@ -130,7 +128,7 @@ def test_general_plastic_net(N=200, D=100):
     lm_pnet.xi = xi
     lm_pnet.zeta = zeta
     lm_pnet.fit_general_plastic_net(
-        lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
@@ -147,14 +145,12 @@ def test_plastic_ridge(N=200, D=100):
     lambda_total = np.random.exponential()
     zeta = np.zeros(D, dtype=np.float64)
 
-    lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=0, tol=1e-8, max_iter=1000
-    )
+    lm = linear_model.Ridge(alpha=lambda_total * N, tol=1e-12, max_iter=1000)
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
     lm_pnet.zeta = zeta
-    lm_pnet.fit_plastic_ridge(lambda_total=lambda_total, tol=1e-8, max_iter=1000)
+    lm_pnet.fit_plastic_ridge(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
 
@@ -171,13 +167,13 @@ def test_plastic_lasso(N=200, D=100):
     xi = np.zeros(D, dtype=np.float64)
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=1, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=1, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
     lm_pnet.xi = xi
-    lm_pnet.fit_plastic_lasso(lambda_total=lambda_total, tol=1e-8, max_iter=1000)
+    lm_pnet.fit_plastic_lasso(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
 
@@ -195,14 +191,14 @@ def test_hard_plastic_net(N=200, D=100):
     xi = np.zeros(D, dtype=np.float64)
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
     lm_pnet.xi = xi
     lm_pnet.fit_hard_plastic_net(
-        lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
@@ -221,14 +217,14 @@ def test_soft_plastic_net(N=200, D=100):
     zeta = np.zeros(D, dtype=np.float64)
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
     lm_pnet.zeta = zeta
     lm_pnet.fit_soft_plastic_net(
-        lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
@@ -247,14 +243,14 @@ def test_unified_plastic_net(N=200, D=100):
     xi = np.zeros(D, dtype=np.float64)
 
     lm = linear_model.ElasticNet(
-        alpha=lambda_total, l1_ratio=alpha, tol=1e-8, max_iter=1000
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
 
     lm_pnet = Regression(X, y)
     lm_pnet.xi = xi
     lm_pnet.fit_unified_plastic_net(
-        lambda_total=lambda_total, alpha=alpha, tol=1e-8, max_iter=1000
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
