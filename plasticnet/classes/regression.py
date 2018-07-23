@@ -42,6 +42,9 @@ class Regression:
         self.xi = np.zeros(D, dtype=np.float64)
         self.zeta = np.zeros(D, dtype=np.float64)
 
+        self.converged = False
+        self.iter_num = 0
+
     @property
     def beta(self):
         r"""beta is a property becasue when setting :math:`\vec{\beta}` you also need to set :math:`\vec{r}` such that :math:`\vec{r} = \vec{y} - X\vec{\beta}`. Via the property implementation you can transparently get and set it like a normal attribute."""
@@ -56,12 +59,14 @@ class Regression:
     def fit_ordinary_least_squares(self, tol=1e-8, max_iter=1000):
         r"""In-place ordinary least squares regression.
         See :meth:`plasticnet.solvers.in_place.ordinary_least_squares_` for documentation."""
-        ordinary_least_squares_(self._beta, self._r, self.X, tol=tol, max_iter=max_iter)
+        self.converged, self.iter_num = ordinary_least_squares_(
+            self._beta, self._r, self.X, tol=tol, max_iter=max_iter
+        )
 
     def fit_ridge(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place ridge regression.
         See :meth:`plasticnet.solvers.in_place.ridge_` for documentation."""
-        ridge_(
+        self.converged, self.iter_num = ridge_(
             self._beta,
             self._r,
             self.X,
@@ -73,7 +78,7 @@ class Regression:
     def fit_lasso(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place lasso regression.
         See :meth:`plasticnet.solvers.in_place.lasso_` for documentation."""
-        lasso_(
+        self.converged, self.iter_num = lasso_(
             self._beta,
             self._r,
             self.X,
@@ -85,7 +90,7 @@ class Regression:
     def fit_elastic_net(self, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=1000):
         r"""In-place elastic net regression.
         See :meth:`plasticnet.solvers.in_place.elastic_net_` for documentation."""
-        elastic_net_(
+        self.converged, self.iter_num = elastic_net_(
             self._beta,
             self._r,
             self.X,
@@ -100,7 +105,7 @@ class Regression:
     ):
         r"""In-place general plastic net regression.
         See :meth:`plasticnet.solvers.in_place.general_plastic_net_` for documentation."""
-        general_plastic_net_(
+        self.converged, self.iter_num = general_plastic_net_(
             self._beta,
             self._r,
             self.X,
@@ -115,7 +120,7 @@ class Regression:
     def fit_plastic_ridge(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place plastic ridge regression.
         See :meth:`plasticnet.solvers.in_place.plastic_ridge_` for documentation."""
-        plastic_ridge_(
+        self.converged, self.iter_num = plastic_ridge_(
             self._beta,
             self._r,
             self.X,
@@ -128,7 +133,7 @@ class Regression:
     def fit_plastic_lasso(self, lambda_total=1.0, tol=1e-8, max_iter=1000):
         r"""In-place plastic lasso regression.
         See :meth:`plasticnet.solvers.in_place.plastic_lasso_` for documentation."""
-        plastic_lasso_(
+        self.converged, self.iter_num = plastic_lasso_(
             self._beta,
             self._r,
             self.X,
@@ -143,7 +148,7 @@ class Regression:
     ):
         r"""In-place hard plastic net regression.
         See :meth:`plasticnet.solvers.in_place.hard_plastic_net_` for documentation."""
-        hard_plastic_net_(
+        self.converged, self.iter_num = hard_plastic_net_(
             self._beta,
             self._r,
             self.X,
@@ -159,7 +164,7 @@ class Regression:
     ):
         r"""In-place sof t plastic net regression.
         See :meth:`plasticnet.solvers.in_place.soft_plastic_net_` for documentation."""
-        soft_plastic_net_(
+        self.converged, self.iter_num = soft_plastic_net_(
             self._beta,
             self._r,
             self.X,
@@ -175,7 +180,7 @@ class Regression:
     ):
         r"""In-place unified plastic net regression.
         See :meth:`plasticnet.solvers.in_place.unified_plastic_net_` for documentation."""
-        unified_plastic_net_(
+        self.converged, self.iter_num = unified_plastic_net_(
             self._beta,
             self._r,
             self.X,
