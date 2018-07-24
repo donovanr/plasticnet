@@ -27,6 +27,8 @@ If you don't have `conda` installed and set up for Python 3.x, install it using 
 git clone https://github.com/donovanr/plasticnet.git
 cd plasticnet
 conda env create -f .environment.yml
+conda env update -f .environment.test.yml
+conda env update -f .environment.local.yml
 conda activate plasticnet
 conda develop .
 ```

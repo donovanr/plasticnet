@@ -16,6 +16,7 @@ before_install:
   - conda update --all
   - conda info -a
   - conda env create -f .environment.yml
+  - conda env update -f .environment.test.yml
   - source activate plasticnet
 
 install:
