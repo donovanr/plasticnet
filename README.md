@@ -63,7 +63,6 @@ sphinx-build -b html docs/source docs/build
 
 ### Pre-Commit Hooks
 Pre-commit hooks are configured in [.pre-commit-config.yaml](../master/.pre-commit-config.yaml), and need to be set up (once) with `pre-commit install`.
-[pre-commit](https://pre-commit.com/) itself can be installed with `pip`.
 
 The pre-commit hooks we use are:
 - [Black](https://black.readthedocs.io/en/stable/) for formatting, with the default settings
