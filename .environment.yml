@@ -4,11 +4,11 @@ channels:
 dependencies:
   - python=3.6
   - codecov
+  - conda-build
   - coverage
   - ipython
   - numba
   - numpy
-  - pip
   - pytest
   - pytest-cov
   - scikit-learn

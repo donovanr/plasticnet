@@ -19,7 +19,7 @@ before_install:
   - source activate plasticnet
 
 install:
-  - pip install -e .
+  - conda develop .
 
 script:
   - py.test --cov-report xml --cov plasticnet --verbose

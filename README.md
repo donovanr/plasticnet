@@ -28,7 +28,7 @@ git clone https://github.com/donovanr/plasticnet.git
 cd plasticnet
 conda env create -f .environment.yml
 conda activate plasticnet
-pip install -e .
+conda develop .
 ```
 
 ## Development
