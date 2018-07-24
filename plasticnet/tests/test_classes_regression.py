@@ -134,8 +134,8 @@ def test_general_plastic_net(N=200, D=100):
     np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
 
 
-def test_plastic_ridge(N=200, D=100):
-    r"""Test :meth:`plasticnet.classes.Regression.fit_plastic_ridge` with :math:`\zeta=0` against sklearn elastic net."""
+def test_plastic_ridge_trivial(N=200, D=100):
+    r"""Test plastic ridge(:math:`\zeta=0` in :meth:`plasticnet.classes.Regression.fit_plastic_ridge`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -147,16 +147,46 @@ def test_plastic_ridge(N=200, D=100):
 
     lm = linear_model.Ridge(alpha=lambda_total * N, tol=1e-12, max_iter=1000)
     lm.fit(X, y)
+    beta_lm = lm.coef_
 
     lm_pnet = Regression(X, y)
     lm_pnet.zeta = zeta
     lm_pnet.fit_plastic_ridge(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
 
 
-def test_plastic_lasso(N=200, D=100):
-    r"""Test :meth:`plasticnet.classes.Regression.fit_plastic_lasso` with :math:`\xi=0` against sklearn elastic net."""
+def test_plastic_ridge_real(N=200, D=100):
+    r"""Test :meth:`plasticnet.classes.Regression.fit_plastic_ridge` against sklearn ElasticNet with transformed variables."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    zeta = np.random.randn(D).astype(np.float64)
+
+    X_prime = X
+    y_prime = y - np.dot(X, zeta)
+
+    lm = linear_model.Ridge(alpha=lambda_total * N, tol=1e-12, max_iter=1000)
+    lm.fit(X_prime, y_prime)
+    beta_lm = lm.coef_ + zeta
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.zeta = zeta
+    lm_pnet.fit_plastic_ridge(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+
+# test_plastic_lasso_trivial
+# test_plastic_lasso_real
+
+
+def test_plastic_lasso_trivial(N=200, D=100):
+    r"""Test plastic lasso (:math:`\xi=0` in :meth:`plasticnet.classes.Regression.fit_plastic_lasso`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -170,16 +200,44 @@ def test_plastic_lasso(N=200, D=100):
         alpha=lambda_total, l1_ratio=1, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
+    beta_lm = lm.coef_
 
     lm_pnet = Regression(X, y)
     lm_pnet.xi = xi
     lm_pnet.fit_plastic_lasso(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
 
 
-def test_hard_plastic_net(N=200, D=100):
-    r"""Test :meth:`plasticnet.classes.Regression.fit_hard_plastic_net` with :math:`\xi=0` against sklearn elastic net."""
+def test_plastic_lasso_real(N=200, D=100):
+    r"""Test :meth:`plasticnet.classes.Regression.fit_plastic_lasso` against sklearn ElasticNet with transformed variables."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    xi = np.random.randn(D).astype(np.float64)
+
+    X_prime = X
+    y_prime = y - np.dot(X, xi)
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=1, tol=1e-12, max_iter=1000
+    )
+    lm.fit(X_prime, y_prime)
+    beta_lm = lm.coef_ + xi
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.xi = xi
+    lm_pnet.fit_plastic_lasso(lambda_total=lambda_total, tol=1e-12, max_iter=1000)
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+
+def test_hard_plastic_net_trivial(N=200, D=100):
+    r"""Test hard plastic net (:math:`\xi=0` and in :meth:`plasticnet.classes.Regression.fit_hard_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -194,6 +252,7 @@ def test_hard_plastic_net(N=200, D=100):
         alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
+    beta_lm = lm.coef_
 
     lm_pnet = Regression(X, y)
     lm_pnet.xi = xi
@@ -201,11 +260,61 @@ def test_hard_plastic_net(N=200, D=100):
         lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
 
 
-def test_soft_plastic_net(N=200, D=100):
-    r"""Test :meth:`plasticnet.classes.Regression.fit_soft_plastic_net` with :math:`\zeta=0` against sklearn elastic net."""
+def test_hard_plastic_net_limiting_cases(N=200, D=100):
+    r"""Test hard plastic net :meth:`plasticnet.classes.Regression.fit_hard_plastic_net` against sklearn ElasticNet in limiting cases."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    xi = np.random.randn(D).astype(np.float64)
+
+    X_prime = X
+    y_prime = y - np.dot(X, xi)
+
+    alpha = 1.0
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
+    )
+    lm.fit(X_prime, y_prime)
+    beta_lm = lm.coef_ + xi
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.xi = xi
+    lm_pnet.fit_hard_plastic_net(
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+    alpha = 0.0
+
+    lm = linear_model.Ridge(alpha=lambda_total * N, tol=1e-12, max_iter=1000)
+    lm.fit(X, y)
+
+    beta_lm = lm.coef_
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.xi = xi
+    lm_pnet.fit_hard_plastic_net(
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+
+# test_soft_plastic_net_trivial
+# test_soft_plastic_net_limiting_cases
+
+
+def test_soft_plastic_net_trivial(N=200, D=100):
+    r"""Test soft plastic net (:math:`\zeta=0` in :meth:`plasticnet.classes.Regression.fit_soft_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -220,6 +329,7 @@ def test_soft_plastic_net(N=200, D=100):
         alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
+    beta_lm = lm.coef_
 
     lm_pnet = Regression(X, y)
     lm_pnet.zeta = zeta
@@ -227,11 +337,61 @@ def test_soft_plastic_net(N=200, D=100):
         lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
 
 
-def test_unified_plastic_net(N=200, D=100):
-    r"""Test :meth:`plasticnet.classes.Regression.fit_unified_plastic_net` with :math:`\xi=0` against sklearn elastic net."""
+def test_soft_plastic_net_limiting_cases(N=200, D=100):
+    r"""Test :meth:`plasticnet.classes.Regression.fit_soft_plastic_net` against sklearn ElasticNet in limiting cases."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    zeta = np.random.randn(D).astype(np.float64)
+
+    alpha = 1.0
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
+    )
+    lm.fit(X, y)
+    beta_lm = lm.coef_
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.zeta = zeta
+    lm_pnet.fit_soft_plastic_net(
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+    alpha = 0.0
+
+    X_prime = X
+    y_prime = y - np.dot(X, zeta)
+
+    lm = linear_model.Ridge(alpha=lambda_total * N, tol=1e-12, max_iter=1000)
+    lm.fit(X_prime, y_prime)
+
+    beta_lm = lm.coef_ + zeta
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.zeta = zeta
+    lm_pnet.fit_soft_plastic_net(
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+
+# test_unified_plastic_net_trivial
+# test_unified_plastic_net_real
+
+
+def test_unified_plastic_net_trivial(N=200, D=100):
+    r"""Test unified plastic net (:math:`\xi=0` in :meth:`plasticnet.classes.Regression.fit_unified_plastic_net`) against sklearn ElasticNet."""
 
     X, y, beta_true = make_regression(
         n_samples=N, n_features=D, n_informative=N // 10, coef=True
@@ -246,6 +406,7 @@ def test_unified_plastic_net(N=200, D=100):
         alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
     )
     lm.fit(X, y)
+    beta_lm = lm.coef_
 
     lm_pnet = Regression(X, y)
     lm_pnet.xi = xi
@@ -253,4 +414,34 @@ def test_unified_plastic_net(N=200, D=100):
         lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
     )
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+
+
+def test_unified_plastic_net_real(N=200, D=100):
+    r"""Test :meth:`plasticnet.classes.Regression.fit_unified_plastic_net` against sklearn ElasticNet with transformed variables."""
+
+    X, y, beta_true = make_regression(
+        n_samples=N, n_features=D, n_informative=N // 10, coef=True
+    )
+    X, y = scale(X), scale(y)
+
+    lambda_total = np.random.exponential()
+    alpha = np.random.rand()
+    xi = np.random.randn(D).astype(np.float64)
+
+    X_prime = X
+    y_prime = y - np.dot(X, xi)
+
+    lm = linear_model.ElasticNet(
+        alpha=lambda_total, l1_ratio=alpha, tol=1e-12, max_iter=1000
+    )
+    lm.fit(X_prime, y_prime)
+    beta_lm = lm.coef_ + xi
+
+    lm_pnet = Regression(X, y)
+    lm_pnet.xi = xi
+    lm_pnet.fit_unified_plastic_net(
+        lambda_total=lambda_total, alpha=alpha, tol=1e-12, max_iter=1000
+    )
+
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
