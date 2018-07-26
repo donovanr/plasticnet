@@ -1,6 +1,6 @@
 import numpy as np
 
-from .in_place import (
+from ..in_place import (
     elastic_net_,
     general_plastic_net_,
     hard_plastic_net_,

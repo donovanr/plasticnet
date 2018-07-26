@@ -1,7 +1,7 @@
 import numpy as np
 from numba import jit
 
-from ..utils import math
+from ...utils import math
 
 
 @jit(nopython=True, nogil=True, cache=False)  # pragma: no cover
