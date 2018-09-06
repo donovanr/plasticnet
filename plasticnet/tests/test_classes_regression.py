@@ -21,8 +21,8 @@ def test_set_beta(N=500, D=1000, tol=1e-12, max_iter=10000):
     new_r = y - np.dot(X, new_beta)
     lm_pnet.beta = new_beta
 
-    np.testing.assert_almost_equal(lm_pnet.beta, new_beta, decimal=6)
-    np.testing.assert_almost_equal(lm_pnet._r, new_r, decimal=6)
+    np.testing.assert_almost_equal(lm_pnet.beta, new_beta, decimal=4)
+    np.testing.assert_almost_equal(lm_pnet._r, new_r, decimal=4)
 
 
 def test_ordinary_least_squares_explicit(N=1500, D=1000, tol=1e-12, max_iter=10000):
@@ -39,7 +39,7 @@ def test_ordinary_least_squares_explicit(N=1500, D=1000, tol=1e-12, max_iter=100
     lm_pnet = Regression(X, y)
     lm_pnet.fit_ordinary_least_squares(tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=4)
 
 
 def test_ridge_explicit(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -58,7 +58,7 @@ def test_ridge_explicit(N=500, D=1000, tol=1e-12, max_iter=10000):
     lm_pnet = Regression(X, y)
     lm_pnet.fit_ridge(lambda_total=lambda_total, tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=4)
 
 
 def test_lasso_explicit(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -79,7 +79,7 @@ def test_lasso_explicit(N=500, D=1000, tol=1e-12, max_iter=10000):
     lm_pnet = Regression(X, y)
     lm_pnet.fit_lasso(lambda_total=lambda_total, tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=4)
 
 
 def test_elastic_net_explicit(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -103,7 +103,7 @@ def test_elastic_net_explicit(N=500, D=1000, tol=1e-12, max_iter=10000):
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=4)
 
 
 def test_general_plastic_net(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -131,7 +131,7 @@ def test_general_plastic_net(N=500, D=1000, tol=1e-12, max_iter=10000):
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(lm.coef_, lm_pnet.beta, decimal=4)
 
 
 def test_plastic_ridge_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -153,7 +153,7 @@ def test_plastic_ridge_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
     lm_pnet.zeta = zeta
     lm_pnet.fit_plastic_ridge(lambda_total=lambda_total, tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 def test_plastic_ridge_real(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -178,7 +178,7 @@ def test_plastic_ridge_real(N=500, D=1000, tol=1e-12, max_iter=10000):
     lm_pnet.zeta = zeta
     lm_pnet.fit_plastic_ridge(lambda_total=lambda_total, tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 # test_plastic_lasso_trivial
@@ -206,7 +206,7 @@ def test_plastic_lasso_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
     lm_pnet.xi = xi
     lm_pnet.fit_plastic_lasso(lambda_total=lambda_total, tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 def test_plastic_lasso_real(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -233,7 +233,7 @@ def test_plastic_lasso_real(N=500, D=1000, tol=1e-12, max_iter=10000):
     lm_pnet.xi = xi
     lm_pnet.fit_plastic_lasso(lambda_total=lambda_total, tol=tol, max_iter=max_iter)
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 def test_hard_plastic_net_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -260,7 +260,7 @@ def test_hard_plastic_net_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 def test_hard_plastic_net_limiting_cases(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -306,7 +306,7 @@ def test_hard_plastic_net_limiting_cases(N=500, D=1000, tol=1e-12, max_iter=1000
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 # test_soft_plastic_net_trivial
@@ -337,7 +337,7 @@ def test_soft_plastic_net_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 def test_soft_plastic_net_limiting_cases(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -365,7 +365,7 @@ def test_soft_plastic_net_limiting_cases(N=500, D=1000, tol=1e-12, max_iter=1000
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
     alpha = 0.0
 
@@ -383,7 +383,7 @@ def test_soft_plastic_net_limiting_cases(N=500, D=1000, tol=1e-12, max_iter=1000
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 # test_unified_plastic_net_trivial
@@ -414,7 +414,7 @@ def test_unified_plastic_net_trivial(N=500, D=1000, tol=1e-12, max_iter=10000):
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
 
 
 def test_unified_plastic_net_real(N=500, D=1000, tol=1e-12, max_iter=10000):
@@ -444,4 +444,4 @@ def test_unified_plastic_net_real(N=500, D=1000, tol=1e-12, max_iter=10000):
         lambda_total=lambda_total, alpha=alpha, tol=tol, max_iter=max_iter
     )
 
-    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=6)
+    np.testing.assert_almost_equal(beta_lm, lm_pnet.beta, decimal=4)
