@@ -38,7 +38,7 @@ def ordinary_least_squares_(beta, r, X, tol=1e-8, max_iter=1000):
             rho[j] = np.dot(X[:, j], r) / N
             r -= rho[j] * X[:, j]
             beta[j] += rho[j]
-        converged = np.max(rho) < tol
+        converged = np.max(np.abs(rho)) < tol
     return (converged, iter_num)
 
 
@@ -84,7 +84,7 @@ def ridge_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
-        converged = np.max(delta_beta) < tol
+        converged = np.max(np.abs(delta_beta)) < tol
     return (converged, iter_num)
 
 
@@ -127,7 +127,7 @@ def lasso_(beta, r, X, lambda_total=1.0, tol=1e-8, max_iter=1000):
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
-        converged = np.max(delta_beta) < tol
+        converged = np.max(np.abs(delta_beta)) < tol
     return (converged, iter_num)
 
 
@@ -174,7 +174,7 @@ def elastic_net_(beta, r, X, lambda_total=1.0, alpha=0.75, tol=1e-8, max_iter=10
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
-        converged = np.max(delta_beta) < tol
+        converged = np.max(np.abs(delta_beta)) < tol
     return (converged, iter_num)
 
 
@@ -232,7 +232,7 @@ def general_plastic_net_(
             delta_beta[j] = beta[j] - beta_old[j]
             r -= X[:, j] * delta_beta[j]
             beta_old[j] = beta[j]
-        converged = np.max(delta_beta) < tol
+        converged = np.max(np.abs(delta_beta)) < tol
     return (converged, iter_num)
 
 
